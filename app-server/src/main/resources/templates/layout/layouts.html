@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{layout/layouts}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BitGallery</title>
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+    <link rel="apple-touch-icon" th:href="@{/img/apple-touch-icon.png}">
+    <link rel="apple-touch-icon" sizes="72x72" th:href="@{/img/apple-touch-icon-72x72.png}">
+    <link rel="apple-touch-icon" sizes="114x114" th:href="@{/img/apple-touch-icon-114x114.png}">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/fonts/font-awesome/css/font-awesome.css}">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/nivo-lightbox/nivo-lightbox.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/nivo-lightbox/default.css}">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900" rel="stylesheet">
+
+    <!-- JavaScript Libraries -->
+    <script th:src="@{/js/jquery.1.11.1.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+    <script th:src="@{/js/SmoothScroll.js}"></script>
+    <script th:src="@{/js/nivo-lightbox.js}"></script>
+    <script th:src="@{/js/jqBootstrapValidation.js}"></script>
+    <script th:src="@{/js/contact_me.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script th:src="@{/js/html5shiv.min.js}"></script>
+    <script th:src="@{/js/respond.min.js}"></script>
+    <![endif]-->
+</head>
+
+<body>
+<div data-th-replace="fragments/header::header"></div>
+<div layout:fragment="content" class="content"></div>
+<div th:replace="fragments/footer::footer"></div>
+</body>
+
+
+</html>

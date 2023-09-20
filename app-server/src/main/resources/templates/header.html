@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset='UTF-8'>
+    <title>비트캠프</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/fonts/font-awesome/css/font-awesome.css}">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            background-color: #ffffff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px; /* 헤더의 높이를 80px로 고정 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .header .nav-link {
+            font-weight: 300; /* 글꼴 두께를 얇게 설정 */
+            opacity: 0.7; /* 글꼴 투명도를 줄여서 흐리게 만듦 */
+        }
+        .header .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .header .user-info a {
+            margin-left: 10px;
+            font-size: 7px;
+            color: darkgray;
+            text-decoration: none;
+        }
+        /* Credit 링크 스타일 */
+        .header .credit-link {
+            font-size: 14px;
+            text-decoration: none;
+            color: black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-weight: 300;
+            opacity: 0.7;
+        }
+
+    </style>
+</head>
+<body>
+<div data-th-fragment="header" style='height: 110px; background-color:white; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);  display: flex; align-items: center; justify-content: center;'>
+    <a href='http://localhost' style='font-size: 24px; font-weight: bold; margin-left: 20px; text-decoration: none; color: black; margin-left: 10%;'>BITGALLERY</a>
+    <ul style="list-style-type: none; display: flex; margin: auto;">
+        <li><a href='/board/list?category=1' style="margin-left: 170px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">예정경매</a></li>
+        <li><a href='/board/list?category=2' style="margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">진행경매</a></li>
+        <li><a href='/board/list?category=3' style="margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">종료경매</a></li>
+        <li><a href='/board/list?category=4' style="margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">공지사항</a></li>
+        <li data-th-if="${session.loginUser != null}" style="display: flex; align-items: center; margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">
+            <a data-th-href="@{/chargePoint}" style="margin-right: 10px; cursor: pointer;">
+                <span data-th-text="${session.loginUser.name + ' 님,&nbsp 보유 포인트: ' + session.loginUser.points}"></span>
+            </a>
+            <br>
+            <a href='/auth/logout' style="font-size: 7px;">[로그아웃]</a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

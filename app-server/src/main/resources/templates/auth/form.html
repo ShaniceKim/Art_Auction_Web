@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <title>비트캠프</title>
+</head>
+
+<body style="margin: 0; padding: 0;">
+
+
+<div style="display: flex; justify-content: center; align-items: center; height: calc(100vh - 100px); margin-bottom: 50px;">
+    <div style="border: 8px solid #D8D8D8; padding: 75px; border-radius: 20px; text-align: center;">
+        <h1 style="color: darkgray;">Please Sign In</h1> <!-- 글자색 변경 -->
+
+        <form action='login' method='post'>
+            <table style="border: none; margin: 0 auto;">
+                <tr>
+                    <td><input type="text" name="email" placeholder="이메일을 입력하세요." style="margin-bottom: 10px; border-radius: 20px; text-align: center;"></td>
+                </tr>
+                <tr>
+                    <td><input type='password' name='password' placeholder="암호를 입력하세요." style="margin-bottom: 10px; border-radius: 20px; text-align: center;"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="font-size: 7px;">
+                            <input type='checkbox' name='saveEmail' data-th-checked="${email}" style="transform: scale(0.7); margin-right: 5px; vertical-align: middle;"> remember me
+                        </label>
+                    </td>
+                </tr>
+            </table>
+            <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+                <button style="font-size: 14px; background-color: #D8D8D8; border-radius: 20px; border: none; padding: 6px 12px; color: white; cursor: pointer;">LogIn</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
