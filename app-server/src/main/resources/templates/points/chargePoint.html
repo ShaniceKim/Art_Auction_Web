@@ -1,5 +1,5 @@
-<!Doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,21 +9,17 @@
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
   <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 </head>
-
 <body>
-<div class="header" data-th-replace="header :: header"></div>
+<div data-th-replace="header :: header"></div>
 <h2>마이페이지</h2>
 
-<img data-th-unless="${session.loginUser.photo}" style='height:80px' src='/images/avatar.png'><br>
-<a data-th-if="${session.loginUser.photo}"
-   data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-22/member/${session.loginUser.photo}|"><br>
-  <img data-th-src="|http://itceodfhklmc19010708.cdn.ntruss.com/member/${session.loginUser.photo}?type=f&w=60&h=80&faceopt=true&ttype=jpg|'"><br>
-</a>
-
+<img data-th-if="${session.loginUser.profilePhoto == null}" style='height:40px' src='/images/avatar.png'>
+<img data-th-if="${session.loginUser.profilePhoto != null}"
+     data-th-src="${'http://tyasnlztlptw19619311.cdn.ntruss.com/member/' + session.loginUser.profilePhoto + '?type=f&w=30&h=40&faceopt=true&ttype=jpg'}">
+<br>
 <span id="userId" data-th-text="'회원번호 : ' + ${session.loginUser.no}"></span><br>
 <span id="userName" data-th-text="'회원 : ' + ${session.loginUser.name}+님"></span><br>
 <span id="email" data-th-text="'이메일 : ' + ${session.loginUser.email}"></span><br>
-<span id="point" data-th-text="'포인트 : ' + ${session.loginUser.points}"></span><br>
 
 
 <!-- 포인트 충전 입력 필드 -->
@@ -40,7 +36,7 @@
 <div id="result"></div>
 
 <!-- 세션에서 사용자 포인트를 HTML에 포함 -->
-<span id="userPoints" data-th-text="'보유포인트 : ' + ${session.loginUser.points}+원"></span>
+<span id="userPoints" data-th-text="'보유포인트 : ' + ${session.loginUser.point}+원"></span>
 
 
 <!-- 포인트 충전 및 입찰 스크립트 -->
@@ -164,9 +160,9 @@
       // 입찰 로직을 여기에 추가
       // 사용자의 입찰을 처리하고, 결과를 표시하거나 저장할 수 있습니다.
   });
-// }
+  // }
 
 </script>
-<div class="footer" data-th-replace="footer :: footer"></div>
+<div data-th-replace="footer :: footer"></div>
 </body>
 </html>

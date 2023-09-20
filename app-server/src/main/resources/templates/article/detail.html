@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <title>게시글</title>
+</head>
+<body>
+
+<div data-th-replace="header :: header"></div>
+
+<h1>게시글</h1>
+
+<p data-th-unless="${article}">해당 번호의 게시글이 없습니다!</p>
+
+<form data-th-if="${article}" data-th-action="@{/article/update}" method='post' enctype='multipart/form-data'>
+    <table border='1'>
+        <tr><th style='width:120px;'>번호</th>
+            <td style='width:300px;'><input type='text' name='no' value="100" data-th-value="${article.articleNo}" readonly></td></tr>
+
+        <tr><th>제목</th>
+            <td><input type='text' name='title' value="제목입니다." data-th-value="${article.title}"></td></tr>
+        <tr><th>내용</th>
+            <td><textarea name='content' style='height:200px; width:400px;' data-th-text="${article.content}">내용입니다!</textarea></td></tr>
+        <tr><th>작성자</th> <td data-th-text="${article.writer.name}">홍길동</td></tr>
+        <tr><th>조회수</th> <td data-th-text="${article.viewCount}">34</td></tr>
+        <tr><th>등록일</th> <td data-th-text="${#dates.format(article.createdDate, 'yyyy-MM-dd')}">2023-09-14</td></tr>
+        <tr><th>시작일</th> <td data-th-text="${#dates.format(article.startDate, 'yyyy-MM-dd hh:mm:ss')}">2023-09-14</td></tr>
+        <tr><th>종료일</th> <td data-th-text="${#dates.format(article.endDate, 'yyyy-MM-dd hh:mm:ss')}">2023-09-14</td></tr>
+        <tr><th>현재가격</th> <td data-th-text="${article.curPrice}">34</td></tr>
+        <tr><th>즉시구매가</th> <td data-th-text="${article.endPrice}">34</td></tr>
+        <tr><th>입찰횟수</th> <td data-th-text="${article.bidCount}">34</td></tr>
+
+        <tr><th>첨부파일</th><td>
+            <div data-th-each="file : ${article.attachedFiles}">
+                <a data-th-href="${'https://kr.object.ncloudstorage.com/bitgallery/article/' + file.filePath}"></a>
+                   data-th-text="${file.filePath}">okok.gif</a>
+                <a data-th-href="|/article/fileDelete/attachedFile;no=${file.no}|">삭제</a><br>
+
+        </div>
+        <input type='file' name='files' multiple>
+        </td></tr>
+    </table>
+
+    </div>
+
+
+
+    <div>
+        <button>변경</button>
+        <button type='reset'>초기화</button>
+        <a data-th-href="@{/article/delete(articleNo=${article.articleNo})}">삭제</a>
+        <a data-th-href="@{/article/list(status=${article.status})}">목록</a>
+    </div>
+
+</form>
+
+<div data-th-replace="footer :: footer"></div>
+
+</body>
+</html>

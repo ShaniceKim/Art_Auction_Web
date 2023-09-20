@@ -1,9 +1,7 @@
 package bitcamp.myapp.controller;
 
-import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.service.UserService;
-import bitcamp.myapp.vo.Member;
 import bitcamp.myapp.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,12 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/user")
 public class UserController {
-
   {
     System.out.println("UserController 생성됨!");
   }
@@ -52,7 +47,7 @@ public class UserController {
 
   @GetMapping("{no}")
   public String detail(@PathVariable int no, Model model) throws Exception {
-    model.addAttribute("member", userService.get(no));
+    model.addAttribute("user", userService.get(no));
     return "user/detail";
   }
 

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bitcamp.myapp.dao.AnnouncementDao">
+
+    <!-- 결과 레코드의 컬럼 값을 자바 객체에 어떻게 담을 것인지 설정한다. -->
+    <resultMap type="announcement" id="announcementMap">
+        <id     column="announcement_no"       property="no"/>
+        <result column="title"          property="title"/>
+        <result column="content"        property="content"/>
+        <result column="created_date"   property="createdDate"/>
+
+        <association property="writer" javaType="user">
+            <id     column="user_no"    property="no"/>
+            <result column="name"         property="name"/>
+        </association>
+
+        <collection property="announcementAttachedFiles" ofType="announcementAttachedFile">
+            <id     column="file_no"    property="no"/>
+            <result column="filepath"         property="filePath"/>
+        </collection>
+
+    </resultMap>
+
+    <resultMap type="announcementAttachedFile" id="announcementAttachedFileMap">
+        <id     column="file_no"  property="no"/>
+        <result column="filepath"       property="filePath"/>
+        <result column="announcement_no"       property="announcementNo"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="announcement"
+            useGeneratedKeys="true" keyColumn="announcement_no" keyProperty="no">
+        insert into auction_announcement(title,content,user_no)
+        values(#{title},#{content},#{writer.no})
+    </insert>
+
+    <select id="findAll" parameterType="int" resultMap="announcementMap">
+        select
+        a.announcement_no,
+        a.title,
+        a.created_date,
+        u.user_no,
+        u.name
+        from
+        auction_announcement a inner join auction_user u on a.user_no=u.user_no
+        order by
+        a.created_date desc;
+    </select>
+
+    <select id="findBy" resultMap="announcementMap" parameterType="int">
+        select
+        a.announcement_no,
+        a.title,
+        a.content,
+        a.created_date,
+        u.user_no,
+        u.name,
+        f.file_no,
+        f.filepath
+        from
+        auction_announcement a inner join auction_user u on a.user_no=u.user_no
+        left outer join auction_attached_file f on a.announcement_no=f.announcement_no
+        where
+        a.announcement_no=#{announcementNo}
+    </select>
+
+    <!-- 공지사항의 상단 고정 여부를 업데이트하는 SQL 쿼리 추가 -->
+    <update id="setAnnouncementFixed">
+        UPDATE auction_announcement
+        SET fixed = #{fixed}
+        WHERE announcement_no = #{announcementNo}
+    </update>
+
+    <update id="update" parameterType="announcement">
+        update auction_announcement set
+        title=#{title},
+        content=#{content}
+        where
+        announcement_no=#{no}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from auction_announcement
+        where
+        announcement_no=#{no}
+    </delete>
+
+    <insert id="insertFiles" parameterType="announcement">
+        insert into auction_attached_file(filepath, announcement_no)
+        values
+        <foreach collection="announcementAttachedFiles" item="file" separator=",">(#{file.filePath}, #{no})</foreach>
+    </insert>
+
+    <select id="findFileBy" parameterType="int" resultMap="announcementAttachedFileMap">
+        select
+        file_no,
+        filepath,
+        announcement_no
+        from
+        auction_attached_file
+        where
+        file_no=#{no}
+    </select>
+
+    <delete id="deleteFile" parameterType="int">
+        delete from auction_attached_file
+        where
+        file_no=#{no}
+    </delete>
+
+    <delete id="deleteFiles" parameterType="int">
+        delete from auction_attached_file
+        where
+        announcement_no=#{no}
+    </delete>
+</mapper>

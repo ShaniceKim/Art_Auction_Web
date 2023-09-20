@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>회원</title>
+</head>
+<body>
+
+<div data-th-replace="header :: header"></div>
+
+<h1>회원 목록</h1>
+<div style='margin:5px;'>
+<a href='form'>새 회원</a>
+</div>
+<table border="1">
+<thead>
+  <tr><th>번호</th>  <th>이메일</th><th>이름</th><th>전화번호</th><th>주소</th><th>보유포인트</th></tr>
+</thead>
+<tbody>
+    <tr data-th-each="user : ${list}">
+        <td data-th-text="${user.no}">100</td>
+        <td data-th-text="${user.email}">hong@test.com</td>
+        <td data-th-text="${user.name}">hong@test.com</td>
+        <td data-th-text="${user.phone}">hong@test.com</td>
+        <td data-th-text="${user.address}">hong@test.com</td>
+        <td data-th-text="${user.point}">hong@test.com</td>
+    </tr>
+</tbody>
+</table>
+<a href='/'>메인</a>
+
+<div data-th-replace="footer :: footer"></div>
+
+</body>
+</html>

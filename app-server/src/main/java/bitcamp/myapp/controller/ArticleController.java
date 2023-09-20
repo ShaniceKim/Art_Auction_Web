@@ -8,10 +8,7 @@ import bitcamp.myapp.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -33,27 +30,34 @@ public class ArticleController {
   @PostMapping("add")
   public String add(
           Article article,
-          MultipartFile photofile,
+          @RequestParam("photofile") MultipartFile photofile, // 파일 업로드 파라미터로 지정
           HttpSession session) throws Exception {
 
-//    User loginUser = (User) session.getAttribute("loginUser");
-//    if (loginUser == null) {
-//      return "redirect:/auth/form";
-//    }
+    User loginUser = (User) session.getAttribute("loginUser");
+    if (loginUser == null) {
+      return "redirect:/auth/form";
+    }
 
-    article.setWriter(new User(1));
+    article.setWriter(loginUser);
 
-    if (photofile.getSize() > 0) {
+    if (photofile != null && !photofile.isEmpty()) { // 파일이 업로드되었는지 확인
       String uploadFileUrl = ncpObjectStorageService.uploadFile(
               "bitgallery", "article/", photofile);
       article.setPhoto(uploadFileUrl);
     }
     articleService.add(article);
-    return "redirect:list";
+    return "redirect:list?status=expected";
   }
 
+
+
+
   @GetMapping("delete")
-  public String delete(int articleNo) throws Exception {
+  public String delete(Integer articleNo) throws Exception {
+    if (articleNo == null) {
+      throw new IllegalArgumentException("articleNo는 필수 매개변수입니다.");
+    }
+
     Article article = articleService.get(articleNo);
     if (article == null) {
       throw new Exception("해당 번호의 게시글이 없습니다");
@@ -63,9 +67,10 @@ public class ArticleController {
     } else if (articleService.delete(article.getArticleNo()) == 0) {
       throw new Exception("삭제 오류");
     } else {
-      return "redirect:list";
+      return "redirect:list?status=expected";
     }
   }
+
 
   @GetMapping("detail/{articleNo}")
   public String detail(@PathVariable int articleNo, Model model) throws Exception {

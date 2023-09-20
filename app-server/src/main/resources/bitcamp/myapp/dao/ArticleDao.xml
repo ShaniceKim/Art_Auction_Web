@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bitcamp.myapp.dao.ArticleDao">
+
+    <resultMap id="articleMap" type="article">
+        <id column="article_no"         property="articleNo"/>
+        <result column="title"          property="title"/>
+        <result column="content"        property="content"/>
+        <result column="artist"         property="artist"/>
+        <result column="view_count"     property="viewCount"/>
+        <result column="created_date"   property="createdDate"/>
+        <result column="photo"          property="photo"/>
+        <result column="start_date"     property="startDate"/>
+        <result column="end_date"       property="endDate"/>
+        <result column="status"         property="status"/>
+        <result column="cur_price"      property="curPrice"/>
+        <result column="end_price"      property="endPrice"/>
+        <result column="bid_count"      property="bidCount"/>
+
+        <association property="writer" javaType="user">
+            <id column="user_no"            property="no"/>
+            <result column="authority"      property="authority"/>
+            <result column="email"          property="email"/>
+            <result column="password"       property="password"/>
+            <result column="name"           property="name"/>
+            <result column="phone"          property="phone"/>
+            <result column="zonecode"       property="zonecode"/>
+            <result column="address"        property="address"/>
+            <result column="detail_addr"    property="detailAddr"/>
+            <result column="join_date"      property="joinDate"/>
+            <result column="profile_photo"  property="profilePhoto"/>
+            <result column="point"          property="point"/>
+        </association>
+    </resultMap>
+
+    <insert id="insert" parameterType="article">
+        insert into auction_article(user_no,title,content,artist,photo,cur_price,end_price)
+        values(#{writer.no},#{title},#{content},#{artist},#{photo},#{curPrice},#{endPrice})
+    </insert>
+
+    <select id="findAll" parameterType="status" resultMap="articleMap">
+        select
+        A.*, U.*
+        from
+        auction_article A inner join auction_user U on A.user_no=U.user_no
+        where
+        status=#{status}
+        order by
+        A.article_no
+    </select>
+
+    <select id="findBy" parameterType="int" resultMap="articleMap">
+        select
+        A.*, U.*
+        from
+        auction_article A inner join auction_user U on A.user_no=U.user_no
+        where
+        article_no=#{articleNo}
+        order by
+        A.article_no
+    </select>
+
+    <update id="update" parameterType="article">
+        update auction_article set
+        title=#{title}
+        ,content=#{content}
+        ,photo=#{photo}
+        ,cur_price=#{cur_price}
+        ,end_price=#{end_price}
+        where
+        article_no=#{articleNo}
+    </update>
+
+    <update id="updateViewCount" parameterType="int">
+        update auction_article set
+        view_count = view_count + 1
+        where
+        article_no=#{articleNo}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from auction_article
+        where
+        article_no=#{articleNo}
+    </delete>
+
+    <update id="bid" parameterType="article">
+        update auction_article set
+        cur_price=#{curPrice}
+        ,bid_count = bid_count + 1
+        where
+        article_no=#{articleNo}
+    </update>
+
+    <select id="findAuctionArticlesByDate" parameterType="String" resultMap="articleMap">
+        select
+        a.article_no,
+        a.title,
+        a.content,
+        a.view_count,
+        a.photo,
+        a.start_date,
+        a.end_date,
+        a.status,
+        a.cur_price,
+        a.end_price,
+        a.bid_count,
+        u.name
+        from
+        auction_article a
+        inner join auction_user u on a.user_no = u.user_no
+        where
+        a.start_date &lt;= #{date}
+        AND a.end_date >= #{date}
+        order by
+        a.article_no desc
+    </select>
+</mapper>

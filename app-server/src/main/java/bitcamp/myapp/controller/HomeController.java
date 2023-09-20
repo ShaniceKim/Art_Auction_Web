@@ -1,10 +1,6 @@
 package bitcamp.myapp.controller;
 
-import bitcamp.myapp.dao.UserDao;
-import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.service.UserService;
-import bitcamp.myapp.vo.Authority;
-import bitcamp.myapp.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

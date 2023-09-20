@@ -117,21 +117,23 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/board/list?category=2" class="page-scroll">공지사항</a></li>
-                <li><a href="/board/list?category=1" class="page-scroll">예정경매</a></li>
-                <li><a href="/board/list?category=1" class="page-scroll">진행경매</a></li>
-                <li><a href="/board/list?category=1" class="page-scroll">종료경매</a></li>
+                <li><a href="/article/list?status=expected" class="page-scroll">예정경매</a></li>
+                <li><a href="/article/list?status=progress" class="page-scroll">진행경매</a></li>
+                <li><a href="/article/list?status=end" class="page-scroll">종료경매</a></li>
                 <li data-th-if="${session.loginUser == null}">
                     <a href='/auth/form'>로그인</a>
                 </li>
                 <li data-th-if="${session.loginUser != null}" style="display: flex; align-items: center;">
                     <a data-th-href="@{/chargePoint}" style="margin-right: 10px; cursor: pointer;">
-                        <span data-th-text="${session.loginUser.name + ' 님,&nbsp 보유 포인트: ' + session.loginUser.points}"></span>
+                        <span data-th-text="'&quot;' + ${session.loginUser.name} + '&quot;님,&nbsp 보유 포인트 : ' + ${session.loginUser.point}" style="text-decoration: none; cursor: pointer;"></span>
                     </a>
+
+
                     <br>
                     <a href='/auth/logout' style="font-size: 7px;">[로그아웃]</a>
                 </li>
                 <li data-th-if="${session.loginUser == null}">
-                    <a href="/member/form" class="page-scroll">회원가입</a>
+                    <a href="/user/form" class="page-scroll">회원가입</a>
                 </li>
 
             </ul>

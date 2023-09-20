@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>환전 요청 게시판</title>
+    <style>
+        /* 페이지 스타일 */
+        body {
+            background-color: #f4f4f4; /* 페이지 배경색을 회색으로 설정 */
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* 표 스타일 */
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            background-color: #fff; /* 표 배경색을 흰색으로 설정 */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+            border-radius: 5px; /* 모서리 둥글게 */
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        /* 버튼 스타일 */
+        .request-button-container {
+            display: flex;
+            justify-content: flex-end;
+            width: 80%; /* 표와 같은 너비로 설정 */
+            padding-top: 20px;
+        }
+        .request-button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px; /* 글씨 크기 조정 */
+            font-weight: bold; /* 글씨 두껍게 설정 */
+        }
+        .request-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* 페이지 컨테이너 스타일 */
+        .page-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #ffffff; /* 배경색을 하얀색으로 설정 */
+        }
+    </style>
+</head>
+<body>
+<!-- 페이지 컨테이너 -->
+<div class="page-container">
+    <!-- 게시판 -->
+    <table>
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성일</th> <!-- 작성일 열을 먼저 배치 -->
+            <th>작성자</th> <!-- 작성자 열을 그 다음에 배치 -->
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 게시물 목록 (예시) -->
+        <tr>
+            <td>1</td>
+            <td>환전 요청 제목 1</td>
+            <td>2023-09-20</td> <!-- 작성일 내용 입력 -->
+            <td>사용자 1</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>환전 요청 제목 2</td>
+            <td>2023-09-21</td> <!-- 작성일 내용 입력 -->
+            <td>사용자 2</td>
+        </tr>
+        <!-- 여러 게시물 추가 가능 -->
+        </tbody>
+    </table>
+
+    <!-- 환전 요청 버튼 컨테이너 -->
+    <div class="request-button-container">
+        <!-- 환전 요청 버튼 -->
+        <a href="form.html" class="request-button">환전 요청</a>
+    </div>
+</div>
+</body>
+</html>

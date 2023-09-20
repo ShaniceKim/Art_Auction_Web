@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <title>게시글</title>
+</head>
+<body>
+
+<div data-th-replace="header :: header"></div>
+
+<h1>게시글 목록</h1>
+<div style='margin:5px;'>
+    <a data-th-href="@{/article/form}">새 글</a>
+</div>
+<table border='1'>
+    <thead>
+    <tr>
+        <th>이미지</th>
+        <th>제목</th>
+        <th>현재가</th>
+        <th>즉시구매가</th>
+        <th>경매 시작시간</th>
+        <th>경매 종료시간</th>
+        <th>현재 입찰수</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr data-th-each="article : ${list}">
+        <td>
+            <img data-th-if="${article.photo}" src="/images/avatar.png" style="width:30px;height:40px;">
+            <!--        <img data-th-if="${article.photo}" data-th-src="@{'http://mvsenqskbqzl19010704.cdn.ntruss.com/member/' + ${member.photo}(type=f,w=30,h=40,faceopt=true,ttype=jpg)}">-->
+        </td>
+        <td><a data-th-href="@{'/article/detail/' + ${article.articleNo}}"
+               data-th-text="${article.title} ?: '제목없음'">게시글 제목</a>
+        </td>
+        <td data-th-text="${article.curPrice}">27</td>
+        <td data-th-text="${article.endPrice}">27</td>
+        <td data-th-text="${#dates.format(article.startDate, 'yyyy/MM/dd hh:mm:dd')}">2021-09-14 19:20:11</td>
+        <td data-th-text="${#dates.format(article.endDate, 'yyyy/MM/dd hh:mm:dd')}">2021-09-14 19:20:11</td>
+        <td data-th-text="${article.bidCount}">27</td>
+    </tr>
+    </tbody>
+</table>
+<a data-th-href='@{/}'>메인</a>
+
+<div data-th-replace="footer :: footer"></div>
+
+</body>
+</html>

@@ -18,7 +18,7 @@ public class User implements Serializable {
   private String detailAddr;
   private Date joinDate;
   private String profilePhoto;
-  private Integer point;
+  private int point;
 
   public User(int no) {
     this.no = no;
@@ -68,9 +68,6 @@ public class User implements Serializable {
     this.profilePhoto = profile_photo;
   }
 
-  public void setPoint(Integer point) {
-    this.point = point;
-  }
 
   public int getNo() {
     return no;
@@ -112,11 +109,13 @@ public class User implements Serializable {
     return profilePhoto;
   }
 
-  public Integer getPoint() {
+  public int getPoint() {
     return point;
   }
 
-
+  public void setPoint(int point) {
+    this.point = point;
+  }
 
   @Override
   public String toString() {
@@ -135,3 +134,4 @@ public class User implements Serializable {
             '}';
   }
 }
+

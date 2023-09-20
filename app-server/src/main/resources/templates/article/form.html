@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <title>비트캠프</title>
+</head>
+<body>
+
+<div data-th-replace="header :: header"></div>
+
+<h1>게시글</h1>
+<form data-th-action="@{/article/add}" method='post' enctype='multipart/form-data'>
+    제목 <input type='text' name='title'><br>
+    내용 <textarea name='content'></textarea><br>
+    파일 <input type='file' name='photofile' multiple><br>
+    화가 <input type='text' name='artist'><br> // 임시구현
+    시작금액 <input type='text' name='curPrice' multiple><br>
+    즉시구매가 <input type='text' name='endPrice' multiple><br>
+    <button>등록</button>
+</form>
+
+<div data-th-replace="footer :: footer"></div>
+
+</body>
+</html>

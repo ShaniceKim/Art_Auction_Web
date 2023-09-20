@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bitcamp.myapp.dao.UserDao">
+
+  <!-- 결과 레코드의 컬럼 값을 자바 객체에 어떻게 담을 것인지 설정한다. -->
+  <resultMap type="user" id="userMap">
+    <id     column="user_no"    property="no"/>
+    <result column="authority"    property="authority"/>
+    <result column="email"        property="email"/>
+    <result column="password"     property="password"/>
+    <result column="name"         property="name"/>
+    <result column="phone"         property="phone"/>
+    <result column="address"         property="address"/>
+    <result column="detail_addr"         property="detailAddr"/>
+    <result column="joinDate" property="joinDate"/>
+    <result column="profilePhoto"        property="profilePhoto"/>
+    <result column="point" property="point"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="user">
+    insert into auction_user(authority,email,password,name,phone,address,detail_addr)
+    values(#{authority},#{email},sha1(#{password}),#{name},#{phone},#{address},#{detailAddr})
+  </insert>
+
+  <select id="findAll" resultMap="userMap">
+    select
+    user_no,
+    name,
+    email,
+    phone,
+    address,
+    point
+    from
+    auction_user
+    order by
+    name asc
+  </select>
+
+  <select id="findBy" parameterType="int" resultMap="userMap">
+    select
+    user_no,
+    name,
+    email,
+    address,
+    join_date as joinDate,
+    profile_photo as profilePhoto,
+    point
+    from
+    auction_user
+    where
+    user_no=#{no}
+  </select>
+
+  <select id="findByEmailAndPassword" resultMap="userMap">
+    select
+    user_no,
+    name,
+    email,
+    join_date as joinDate,
+    profile_photo as profilePhoto
+    from
+    auction_user
+    where
+    email=#{email}
+    and password=sha1(#{password})
+  </select>
+
+
+
+
+  <update id="update" parameterType="user">
+    update auction_user set
+    email=#{email}
+    ,password=sha1(#{password})
+    ,name=#{name}
+    ,phone=#{phone}
+    ,address=#{address}
+    ,detail_addr=#{detailAddr}
+    <if test="profilePhoto != null">
+      ,photo=#{profilePhoto}
+    </if>
+    where
+    user_no=#{no}
+  </update>
+
+  <delete id="delete" parameterType="int">
+    delete from auction_user
+    where
+    user_no=#{no}
+  </delete>
+
+  <update id="updatePoints">
+    UPDATE auction_user -- 테이블 이름 수정
+    SET point = point - #{point}
+    WHERE user_no = #{no} -- 컬럼 이름 수정
+  </update>
+
+  <update id="chargePoints">
+    UPDATE auction_user -- 테이블 이름 수정
+    SET point = point + #{point}
+    WHERE user_no = #{no} -- 컬럼 이름 수정
+  </update>
+
+</mapper>

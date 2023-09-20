@@ -1,7 +1,7 @@
 package bitcamp.myapp.controller;
 
-import bitcamp.myapp.service.MemberService;
-import bitcamp.myapp.vo.Member;
+import bitcamp.myapp.service.UserService;
+import bitcamp.myapp.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +23,11 @@ public class AuthController {
   }
 
   @Autowired
-  MemberService memberService;
+  UserService userService;
 
   @GetMapping("form")
   public void form(@CookieValue(required = false) String email, Model model) {
+
     model.addAttribute("email", email);
   }
 
@@ -48,7 +49,7 @@ public class AuthController {
       response.addCookie(cookie);
     }
 
-    Member loginUser = memberService.get(email, password);
+    User loginUser = userService.get(email, password);
     if (loginUser == null) {
       model.addAttribute("refresh", "2;url=form");
       throw new Exception("회원 정보가 일치하지 않습니다.");

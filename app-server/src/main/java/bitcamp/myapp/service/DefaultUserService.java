@@ -22,8 +22,8 @@ public class DefaultUserService implements UserService {
 
   @Transactional
   @Override
-  public int add(User member) throws Exception {
-    return userDao.insert(member);
+  public int add(User user) throws Exception {
+    return userDao.insert(user);
   }
 
   @Override
@@ -32,8 +32,8 @@ public class DefaultUserService implements UserService {
   }
 
   @Override
-  public User get(int memberNo) throws Exception {
-    return userDao.findBy(memberNo);
+  public User get(int userNo) throws Exception {
+    return userDao.findBy(userNo);
   }
 
   @Override
@@ -43,23 +43,23 @@ public class DefaultUserService implements UserService {
 
   @Transactional
   @Override
-  public int update(User member) throws Exception {
-    return userDao.update(member);
+  public int update(User user) throws Exception {
+    return userDao.update(user);
   }
 
   @Transactional
   @Override
-  public int delete(int memberNo) throws Exception {
-    return userDao.delete(memberNo);
+  public int delete(int userNo) throws Exception {
+    return userDao.delete(userNo);
   }
 
   @Override
-  public void updateUserPoints(String userNo, int points) {
-    userDao.updatePoints(userNo, points);
+  public void updateUserPoints(String userNo, int point) {
+    userDao.updatePoints(userNo, point);
   }
 
   @Override
-  public void chargeUserPoints(String userNo, int points) {
-    userDao.chargePoints(userNo, points);
+  public void chargeUserPoints(String userNo, int point) {
+    userDao.chargePoints(userNo, point);
   }
 }
