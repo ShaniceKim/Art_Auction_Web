@@ -58,16 +58,17 @@
     <a href='http://localhost' style='font-size: 24px; font-weight: bold; margin-left: 20px; text-decoration: none; color: black; margin-left: 10%;'>BITGALLERY</a>
     <ul style="list-style-type: none; display: flex; margin: auto;">
         <li><a href='/board/list?category=4' style="margin-left: 170px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">공지사항</a></li>
-        <li><a href='/article/list?status=expected' style="margin-left: 170px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">예정경매</a></li>
+        <li><a href='/article/list?status=expected' style="margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">예정경매</a></li>
         <li><a href='/article/list?status=progress' style="margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">진행경매</a></li>
         <li><a href='/article/list?status=end' style="margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">종료경매</a></li>
+
         <li data-th-if="${session.loginUser != null}" style="display: flex; align-items: center; margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">
             <a data-th-href="@{/chargePoint}">
-                <span data-th-text="'&quot;' + ${session.loginUser.name} + '&quot;님, 보유 포인트 : ' + ${session.loginUser.point}" style="text-decoration: underline; cursor: pointer;"></span>
+                <span data-th-text="'&quot;' + ${session.loginUser.name} + '&quot;님, 보유 포인트 : ' + ${session.loginUser.point}" style="text-decoration: none; cursor: pointer;"></span>
             </a>
 
-                <br>
-            <a href='/auth/logout' style="font-size: 7px;">[로그아웃]</a>
+            <br>
+            <a href='/auth/logout' style="font-size: 7px; margin-left: 40px;">[로그아웃]</a>
         </li>
     </ul>
 </div>

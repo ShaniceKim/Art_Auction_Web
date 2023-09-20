@@ -1,43 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>포인트 충전 및 입찰</title>
+  <title>My Page</title>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   <!-- 아임포트 라이브러리 추가 -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
   <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" type="text/css" th:href="@{/css/mypage.css}">
+  <script th:src="@{/js/mypage.js}"></script>
 </head>
 <body>
 <div data-th-replace="header :: header"></div>
-<h2>마이페이지</h2>
+<div class="container">
+  <!-- 사용자 정보 패널 -->
+      <div class="card card-container">
+        <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+        <p id="profile-name" class="profile-name-card"></p>
 
-<img data-th-if="${session.loginUser.profilePhoto == null}" style='height:40px' src='/images/avatar.png'>
-<img data-th-if="${session.loginUser.profilePhoto != null}"
-     data-th-src="${'http://tyasnlztlptw19619311.cdn.ntruss.com/member/' + session.loginUser.profilePhoto + '?type=f&w=30&h=40&faceopt=true&ttype=jpg'}">
-<br>
-<span id="userId" data-th-text="'회원번호 : ' + ${session.loginUser.no}"></span><br>
-<span id="userName" data-th-text="'회원 : ' + ${session.loginUser.name}+님"></span><br>
-<span id="email" data-th-text="'이메일 : ' + ${session.loginUser.email}"></span><br>
+        <span id="userId" data-th-text="'회원번호 : ' + ${session.loginUser.no}"></span><br>
+        <span id="userName" data-th-text="'회원 : ' + ${session.loginUser.name}+님"></span><br>
+        <span id="email" data-th-text="'이메일 : ' + ${session.loginUser.email}"></span><br>
 
+      </div><!-- /card-container -->
 
-<!-- 포인트 충전 입력 필드 -->
-<h2>포인트 충전</h2>
-<input type="text" id="rechargeAmount" placeholder="충전할 포인트 입력" onkeyup="formatCurrency(this)">
-<button id="rechargeButton">포인트 충전</button>
+  <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 50vh;">
+    <!-- 포인트 충전 입력 필드 -->
+    <h2 style="font-size:20px;">포인트 충전</h2>
+    <div class="input-group" style="width: 30%;">
+      <input type="text" id="rechargeAmount" class="form-control" placeholder="충전할 포인트 입력" onkeyup="formatCurrency(this)">
+      <span class="input-group-btn">
+            <button id="rechargeButton" class="btn btn-secondary">포인트 충전</button>
+        </span>
+    </div>
 
-<!-- 입찰 금액 입력 필드 -->
-<h2>입찰</h2>
-<input type="text" id="bidAmount" placeholder="입찰할 금액 입력" onkeyup="formatCurrency(this)">
-<button id="bidButton">입찰</button>
-
-<!-- 결과 표시를 위한 엘리먼트 -->
-<div id="result"></div>
-
-<!-- 세션에서 사용자 포인트를 HTML에 포함 -->
-<span id="userPoints" data-th-text="'보유포인트 : ' + ${session.loginUser.point}+원"></span>
-
+    <!-- 입찰 금액 입력 필드 -->
+    <h2 style="font-size:20px;">입찰</h2>
+    <div class="input-group" style="width: 30%;">
+      <input type="text" id="bidAmount" class="form-control" placeholder="입찰할 금액 입력" onkeyup="formatCurrency(this)">
+      <span class="input-group-btn">
+            <button id="bidButton" class="btn btn-secondary">입찰</button>
+        </span>
+    </div>
+  </div>
 
 <!-- 포인트 충전 및 입찰 스크립트 -->
 <script>
@@ -109,8 +121,6 @@
           }
       });
   });
-
-
 </script>
 
 <script>
@@ -121,7 +131,6 @@
       var userPoints = parseInt(document.getElementById('userPoints').textContent.replace(/\D/g, '')); // 보유 포인트를 가져옴
       var userNo = [[${session.loginUser.no}]];
       // JavaScript 코드
-
 
       if (isNaN(bidAmount) || bidAmount <= 0) {
           alert('올바른 입찰 금액을 입력하세요.'); // 유효한 금액을 입력하지 않은 경우 알림
@@ -141,7 +150,6 @@
               userNo: userNo, // 사용자 번호
               bidAmount: bidAmount, // 입찰 금액
           },
-
           success: function (data) {
               console.log(data);
               try {
@@ -160,9 +168,8 @@
       // 입찰 로직을 여기에 추가
       // 사용자의 입찰을 처리하고, 결과를 표시하거나 저장할 수 있습니다.
   });
-  // }
-
 </script>
+
 <div data-th-replace="footer :: footer"></div>
 </body>
 </html>
