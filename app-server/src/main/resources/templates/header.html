@@ -57,10 +57,10 @@
 <div data-th-fragment="header" style='height: 110px; background-color:white; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);  display: flex; align-items: center; justify-content: center;'>
     <a href='http://localhost' style='font-size: 24px; font-weight: bold; margin-left: 20px; text-decoration: none; color: black; margin-left: 10%;'>BITGALLERY</a>
     <ul style="list-style-type: none; display: flex; margin: auto;">
-        <li><a href='/board/list?category=4' style="margin-left: 170px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">공지사항</a></li>
-        <li><a href='/article/list?status=expected' style="margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">예정경매</a></li>
-        <li><a href='/article/list?status=progress' style="margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">진행경매</a></li>
-        <li><a href='/article/list?status=end' style="margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">종료경매</a></li>
+        <li><a href='/announcement/list?currentPage=1' style="margin-left: 170px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">공지사항</a></li>
+        <li><a href='/article/list?status=expected&currentPage=1' style="margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">예정경매</a></li>
+        <li><a href='/article/list?status=progress&currentPage=1' style="margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">진행경매</a></li>
+        <li><a href='/article/list?status=end&currentPage=1' style="margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">종료경매</a></li>
 
         <li data-th-if="${session.loginUser != null}" style="display: flex; align-items: center; margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">
             <a data-th-href="@{/chargePoint}">

@@ -3,22 +3,99 @@
 <head>
     <meta charset='UTF-8'>
     <title>비트캠프</title>
+
+    <style>
+
+        /* 수정된 스타일 */
+   body {
+       font-family: Arial, sans-serif;
+   }
+
+   a {
+   color: #000;
+   text-decoration: none;
+   text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
+   }
+
+   h1 {
+       text-align: center;
+       margin: 20px 0;
+   }
+   form {
+       width: 40%;
+       margin: 210px auto;
+       padding: 20px;
+       border: 4px solid #D8D8D8;
+       border-radius: 20px;
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+   }
+   label, input, textarea, button {
+       display: block;
+       margin-bottom: 15px;
+   }
+   label {
+       font-weight: bold;
+   }
+   input[type="text"],
+   input[type="file"] {
+       width: 100%;
+       max-width: 300px; /* 최대 너비 설정 */
+       padding: 8px;
+       border: 1px solid #ccc;
+       border-radius: 5px;
+       font-size: 14px;
+   }
+   textarea {
+       width: 100%;
+       max-width: 300px; /* 최대 너비 설정 */
+       height: 100px; /* 높이 조정 */
+       padding: 8px;
+       border: 1px solid #ccc;
+       border-radius: 5px;
+       font-size: 14px;
+   }
+   button {
+       background-color: #D8D8D8;
+       color: white;
+       border: none;
+       padding: 10px 20px;
+       border-radius: 5px;
+       font-size: 14px;
+       cursor: pointer;
+   }
+   .button-container {
+       display: flex; /* 아이템들을 가로로 배치하기 위해 flex 사용 */
+       align-items: center; /* 수직 중앙 정렬 */
+   }
+   button {
+       margin-right: 10px; /* 등록 버튼과 상단 고정 버튼 사이의 간격 조절 */
+   }
+   label {
+       margin-left: 10px; /* 등록 버튼과 상단 고정 버튼 사이의 간격 조절 */
+   }
+    </style>
+
+    </style>
+
 </head>
 <body>
 
 <div data-th-replace="header :: header"></div>
-
-<h1>게시글</h1>
-<form data-th-action="@{/article/add}" method='post' enctype='multipart/form-data'>
-    제목 <input type='text' name='title'><br>
-    내용 <textarea name='content'></textarea><br>
-    파일 <input type='file' name='photofile' multiple><br>
-    화가 <input type='text' name='artist'><br> // 임시구현
-    시작금액 <input type='text' name='curPrice' multiple><br>
-    즉시구매가 <input type='text' name='endPrice' multiple><br>
+<div style="display: flex; justify-content: center; align-items: center; padding: 10px; min-height: calc(100vh - 130px);">
+<form data-th-action="@{/article/add(currentPage=${currentPage})}" method='post' enctype='multipart/form-data' style="margin:10px;">
+    <h2 style="text-align: center; font-weight: 320; letter-spacing: 2px;">게시글</h2>
+    <input type='text' name='title' placeholder="제목을 입력하세요." style="margin-bottom: 10px; border-radius: 20px; text-align: center;">
+    <textarea name='content' placeholder="제목을 입력하세요." style="margin-bottom: 10px; border-radius: 20px; text-align: center;"></textarea>
+    <input type='text' name='artist' placeholder="작가명을 입력하세요." style="margin-bottom: 10px; border-radius: 20px; text-align: center;">
+    <input type='file' name='files' multiple style="margin-bottom: 10px; border-radius: 20px; text-align: center; font-size:10px;">
+    <br>
+    <input type='text' name='curPrice' multiple placeholder="시작금액을 입력하세요." style="margin-bottom: 10px; border-radius: 20px; text-align: center;"><br>
+    <input type='text' name='endPrice' multiple placeholder="시작구매가를 입력하세요." style="margin-bottom: 10px; border-radius: 20px; text-align: center;"><br>
     <button>등록</button>
 </form>
-
+</div>
 <div data-th-replace="footer :: footer"></div>
 
 </body>

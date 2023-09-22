@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <title>게시글</title>
+</head>
+<body>
+
+<div data-th-replace="header :: header"></div>
+
+<h1>게시글</h1>
+
+<p data-th-unless="${article}">해당 번호의 게시글이 없습니다!</p>
+
+<form data-th-if="${article}" data-th-action="@{/article/commit/(currentPage=${currentPage})}" method='post'
+      enctype='multipart/form-data'>
+    <table border='1'>
+        <tr>
+            <th style='width:120px;'>작품</th>
+            <td style='width:300px;'>
+                <img data-th-src="${'http://tyasnlztlptw19619311.cdn.ntruss.com/article/' + article.photo + '?type=f&w=320&h=240&autorotate=false&faceopt=false&ttype=jpg'}">
+                </a>
+                <input name='photofile' type='file'>
+            </td>
+        </tr>
+
+        <tr>
+            <th style='width:120px;'>번호</th>
+            <td style='width:300px;'><input type='text' name='articleNo' value="100"
+                                            data-th-value="${article.articleNo}" readonly></td>
+        </tr>
+        <tr>
+            <th>제목</th>
+            <td><input type='text' name='title' value="제목" data-th-value="${article.title}"></td>
+        </tr>
+        <tr>
+            <th>내용</th>
+            <td><textarea data-th-text="${article.content}" name='content'
+                          style='height:20px; width:400px;'>내용</textarea></td>
+        </tr>
+        <tr>
+            <th>작가</th>
+            <td><input type='text' name='artist' value="작가" data-th-value="${article.artist}"></td>
+        </tr>
+        <tr>
+            <th>현재가격</th>
+            <td><input type='text' name='curPrice' value="100000"
+                       data-th-value="${article.curPrice}"></td>
+        </tr>
+        <tr>
+            <th>즉시구매가격</th>
+            <td><input type='text' name='endPrice' value="500000"
+                       data-th-value="${article.endPrice}"></td>
+        </tr>
+        </div>
+        </td></tr>
+    </table>
+    </div>
+
+    <div>
+        <button>변경</button>
+        <button type='reset'>초기화</button>
+        <a data-th-href="@{/article/list(status=${article.status},currentPage=${currentPage})}">목록</a>
+    </div>
+
+</form>
+
+<div data-th-replace="footer :: footer"></div>
+
+</body>
+</html>

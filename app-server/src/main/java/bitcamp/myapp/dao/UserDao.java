@@ -16,8 +16,8 @@ public interface UserDao {
   int updatePoint(User user);
   int delete(int userNo);
 
-  void updatePoints(@Param("userNo") String userNo, @Param("points") int point);
+  void updatePoints(@Param("userNo") String userNo, @Param("point") int point);
 
-  void chargePoints(@Param("userNo") String userNo, @Param("points") int point);
+  void chargePoints(@Param("userNo") String userNo, @Param("point") int point);
 
 }

@@ -14,7 +14,7 @@
 
         /* 표 스타일 */
         table {
-            width: 80%;
+            width: 60%;
             border-collapse: collapse;
             margin: 20px auto;
             background-color: #fff; /* 표 배경색을 흰색으로 설정 */
@@ -32,7 +32,7 @@
         .request-button-container {
             display: flex;
             justify-content: flex-end;
-            width: 80%; /* 표와 같은 너비로 설정 */
+            width: 60%; /* 표와 같은 너비로 설정 */
             padding-top: 20px;
         }
         .request-button {
@@ -75,19 +75,27 @@
         </tr>
         </thead>
         <tbody>
+            <tr data-th-each="exchange : ${list}">
+                <td data-th-text="${exchange.no}">100</td>
+                <td><a data-th-href="@{'/exchange/detail/' +  + ${exchange.no}}"
+                       data-th-text="${exchange.title} ?: '제목없음'">홍길동님 환전요청</a> &#x1F512;
+                </td>
+                <td data-th-text="${#dates.format(exchange.createdDate, 'yyyy-MM-dd')}">2021-09-14</td>
+                <td data-th-text="${exchange.user.name}">홍길동</td>
+
         <!-- 게시물 목록 (예시) -->
-        <tr>
-            <td>1</td>
-            <td>환전 요청 제목 1</td>
-            <td>2023-09-20</td> <!-- 작성일 내용 입력 -->
-            <td>사용자 1</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>환전 요청 제목 2</td>
-            <td>2023-09-21</td> <!-- 작성일 내용 입력 -->
-            <td>사용자 2</td>
-        </tr>
+<!--        <tr>-->
+<!--            <td>1</td>-->
+<!--            <td>환전 요청 제목 1</td>-->
+<!--            <td>2023-09-20</td> &lt;!&ndash; 작성일 내용 입력 &ndash;&gt;-->
+<!--            <td>사용자 1</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td>2</td>-->
+<!--            <td>환전 요청 제목 2</td>-->
+<!--            <td>2023-09-21</td> &lt;!&ndash; 작성일 내용 입력 &ndash;&gt;-->
+<!--            <td>사용자 2</td>-->
+<!--        </tr>-->
         <!-- 여러 게시물 추가 가능 -->
         </tbody>
     </table>
@@ -95,7 +103,7 @@
     <!-- 환전 요청 버튼 컨테이너 -->
     <div class="request-button-container">
         <!-- 환전 요청 버튼 -->
-        <a href="form.html" class="request-button">환전 요청</a>
+        <a href="@{/exchange/form}" class="request-button">환전 요청</a>
     </div>
 </div>
 </body>

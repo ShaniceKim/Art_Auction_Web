@@ -3,46 +3,129 @@
 <head>
     <meta charset='UTF-8'>
     <title>게시글</title>
+    <style>
+        /* 전체 스타일 */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+        color: #000;
+        text-decoration: none;
+        text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
+        }
+
+
+        /* 헤더 스타일 수정 */
+        .header {
+            background-color: #D8D8D8;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px; /* 헤더의 높이를 80px로 고정 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        /* 푸터 스타일 수정 */
+        .footer {
+            background-color: #D8D8D8;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px; /* 푸터의 높이를 50px로 고정 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        /* 콘텐츠 스타일 수정 */
+        .content {
+            margin-top: 80px; /* 헤더 높이 만큼 콘텐츠 영역을 아래로 밀어줌 */
+            margin-bottom: 50px; /* 푸터 높이 만큼 콘텐츠 영역을 위로 밀어줌 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 130px); /* 화면 높이에서 헤더와 푸터 높이를 뺀 만큼의 높이 설정 */
+        }
+
+    table {
+        border-collapse: separate; /* 'collapse' 대신 'separate'로 변경 */
+        border-spacing: 0; /* 테두리 간격을 0으로 설정 */
+        border: none; /* 테두리 없애기 */
+        border-radius: 50px; /* 표 전체에 둥글게 설정 */
+        width: 100%; /* 표의 너비를 100%로 설정 */
+    }
+
+    th, td {
+        border: 1px solid #ddd; /* 셀 테두리 한 줄로 설정 */
+        padding: 7px;
+        text-align: center;
+        letter-spacing: 1.5px;
+        font-size: 13px;
+
+    }
+
+    th {
+        text-shadow: 2px 2px 4px rgba(128, 128, 128, 0.5); /* 형광펜 효과 추가 */
+    }
+    }
+
+    img {
+        max-width: 160px;
+        max-height: 120px;
+    }
+    </style>
+
+
 </head>
 <body>
 
 <div data-th-replace="header :: header"></div>
 
-<h1>게시글 목록</h1>
-<div style='margin:5px;'>
-    <a data-th-href="@{/article/form}">새 글</a>
-</div>
-<table border='1'>
-    <thead>
-    <tr>
-        <th>이미지</th>
-        <th>제목</th>
-        <th>현재가</th>
-        <th>즉시구매가</th>
-        <th>경매 시작시간</th>
-        <th>경매 종료시간</th>
-        <th>현재 입찰수</th>
-    </tr>
-    </thead>
+<div class="content" style="margin:10px;">
+    <div style="border: 8px solid #D8D8D8; padding: 75px; border-radius: 20px;">
+        <h2 style="text-align: center; font-weight: 320; letter-spacing: 2px;">작품 목록</h2><br>
+        <div style='margin:5px;'>
+            <a data-th-href="@{/article/form(currentPage=${currentPage})}" style="font-size: 12px; font-weight: normal; text-align: right;">new</a>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th style="font-size: 12px; font-weight: normal; text-align: center;">이미지</th>
+                <th style="font-size: 12px; font-weight: normal; text-align: center;">제목</th>
+                <th style="font-size: 12px; font-weight: normal; text-align: center;">현재가</th>
+                <th style="font-size: 12px; font-weight: normal; text-align: center;">즉시 구매가</th>
+                <th style="font-size: 12px; font-weight: normal; text-align: center;">경매 시작시간</th>
+                <th style="font-size: 12px; font-weight: normal; text-align: center;">경매 종료시간</th>
+                <th style="font-size: 12px; font-weight: normal; text-align: center;">현재 입찰수</th>
+            </tr>
+            </thead>
 
-    <tbody>
-    <tr data-th-each="article : ${list}">
-        <td>
-            <img data-th-if="${article.photo}" src="/images/avatar.png" style="width:30px;height:40px;">
-            <!--        <img data-th-if="${article.photo}" data-th-src="@{'http://mvsenqskbqzl19010704.cdn.ntruss.com/member/' + ${member.photo}(type=f,w=30,h=40,faceopt=true,ttype=jpg)}">-->
-        </td>
-        <td><a data-th-href="@{'/article/detail/' + ${article.articleNo}}"
-               data-th-text="${article.title} ?: '제목없음'">게시글 제목</a>
-        </td>
-        <td data-th-text="${article.curPrice}">27</td>
-        <td data-th-text="${article.endPrice}">27</td>
-        <td data-th-text="${#dates.format(article.startDate, 'yyyy/MM/dd hh:mm:dd')}">2021-09-14 19:20:11</td>
-        <td data-th-text="${#dates.format(article.endDate, 'yyyy/MM/dd hh:mm:dd')}">2021-09-14 19:20:11</td>
-        <td data-th-text="${article.bidCount}">27</td>
-    </tr>
-    </tbody>
-</table>
-<a data-th-href='@{/}'>메인</a>
+            <tbody>
+            <tr data-th-each="article : ${list}">
+                <td style="text-align: center;">
+                    <img data-th-if="${article.photo}"
+                         data-th-src="|http://tyasnlztlptw19619311.cdn.ntruss.com/article/${article.photo}?type=f&w=160&h=120&autorotate=false&faceopt=false&ttype=jpg|">
+                </td>
+                <td style="text-align: center;"><a data-th-href="@{/article/detail(articleNo=${article.articleNo},(path=${path}),(currentPage=${currentPage}))}" style="font-size: 14px;">게시글 제목</a></td>
+                <td style="text-align: center;" data-th-text="${article.curPrice}">27</td>
+                <td style="text-align: center;" data-th-text="${article.endPrice}">27</td>
+                <td style="text-align: center;" data-th-text="${#dates.format(article.startDate, 'yyyy/MM/dd hh:mm:dd')}">2021-09-14 19:20:11</td>
+                <td style="text-align: center;" data-th-text="${#dates.format(article.endDate, 'yyyy/MM/dd hh:mm:dd')}">2021-09-14 19:20:11</td>
+                <td style="text-align: center;" data-th-text="${article.bidCount}">27</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 
 <div data-th-replace="footer :: footer"></div>
 

@@ -116,10 +116,10 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/board/list?category=2" class="page-scroll">공지사항</a></li>
-                <li><a href="/article/list?status=expected" class="page-scroll">예정경매</a></li>
-                <li><a href="/article/list?status=progress" class="page-scroll">진행경매</a></li>
-                <li><a href="/article/list?status=end" class="page-scroll">종료경매</a></li>
+                <li><a href="/announcement/list?currentPage=1" class="page-scroll">공지사항</a></li>
+                <li><a href='/article/list?status=expected&currentPage=1' class="page-scroll">예정경매</a></li>
+                <li><a href='/article/list?status=progress&currentPage=1' class="page-scroll">진행경매</a></li>
+                <li><a href='/article/list?status=end&currentPage=1' class="page-scroll">종료경매</a></li>
                 <li data-th-if="${session.loginUser == null}">
                     <a href='/auth/form'>로그인</a>
                 </li>

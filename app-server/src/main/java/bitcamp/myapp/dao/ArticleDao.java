@@ -13,6 +13,8 @@ public interface ArticleDao {
 
   List<Article> findAll(Status status);
 
+  List<Article> findByArtist(String artist);
+
   List<Article> findAuctionArticlesByDate(String date);
 
   Article findBy(int articleNo);
@@ -23,5 +25,7 @@ public interface ArticleDao {
 
   int updateViewCount(int articleNo);
 
-  int bid(@Param("current_price") int currentPrice, @Param("bid_count") int bidCount);
+  int bid(Article article);
+
+  int buy(Article article);
 }

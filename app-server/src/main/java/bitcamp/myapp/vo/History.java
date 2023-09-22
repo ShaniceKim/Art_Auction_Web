@@ -3,18 +3,25 @@ package bitcamp.myapp.vo;
 import java.sql.Timestamp;
 
 public class History {
-    private int no;
+    private int historyNo;
     private User bidder; // 입찰자
     private Article article;
     private int price;
     private Timestamp bidDate;
+    private int winBid;
 
-    public int getNo() {
-        return no;
+    public History(User bidder, Article article, int price) {
+        this.bidder = bidder;
+        this.article = article;
+        this.price = price;
     }
 
-    public void setNo(int no) {
-        this.no = no;
+    public int getHistoryNo() {
+        return historyNo;
+    }
+
+    public void setHistoryNo(int historyNo) {
+        this.historyNo = historyNo;
     }
 
     public User getBidder() {
@@ -47,5 +54,13 @@ public class History {
 
     public void setBidDate(Timestamp bidDate) {
         this.bidDate = bidDate;
+    }
+
+    public int getWinBid() {
+        return winBid;
+    }
+
+    public void setWinBid(int winBid) {
+        this.winBid = winBid;
     }
 }

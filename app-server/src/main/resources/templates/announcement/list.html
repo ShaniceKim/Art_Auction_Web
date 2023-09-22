@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <title>BitGallery</title>
+
+    <style>
+        /* 전체 스타일 */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+        color: #000;
+        text-decoration: none;
+        text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
+        }
+
+
+
+        /* 헤더 스타일 수정 */
+        .header {
+            background-color: #D8D8D8;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px; /* 헤더의 높이를 80px로 고정 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        /* 푸터 스타일 수정 */
+        .footer {
+            background-color: #D8D8D8;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px; /* 푸터의 높이를 50px로 고정 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        /* 콘텐츠 스타일 수정 */
+        .content {
+            margin-top: 80px; /* 헤더 높이 만큼 콘텐츠 영역을 아래로 밀어줌 */
+            margin-bottom: 50px; /* 푸터 높이 만큼 콘텐츠 영역을 위로 밀어줌 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 130px); /* 화면 높이에서 헤더와 푸터 높이를 뺀 만큼의 높이 설정 */
+        }
+
+table {
+    border-collapse: separate; /* 'collapse' 대신 'separate'로 변경 */
+    border-spacing: 0; /* 테두리 간격을 0으로 설정 */
+    border: none; /* 테두리 없애기 */
+    border-radius: 20px; /* 표 전체에 둥글게 설정 */
+    max-width: 100%; /* 표의 최대 너비를 80%로 설정 */
+    margin: 0 auto; /* 가운데 정렬을 위해 추가 */
+}
+
+th, td {
+    border: 1px solid #ddd; /* 셀 테두리 한 줄로 설정 */
+    padding: 7px;
+    text-align: center;
+    letter-spacing: 1.5px;
+
+}
+
+th {
+    text-shadow: 2px 2px 4px rgba(128, 128, 128, 0.5); /* 형광펜 효과 추가 */
+}
+
+img {
+    max-width: 160px;
+    max-height: 120px;
+}
+    </style>
+
+</head>
+<body>
+
+<div data-th-replace="header :: header"></div>
+
+<div class="content" style="margin:10px;">
+<div style= "border: 8px solid #D8D8D8; padding: 30px; border-radius: 20px;">
+    <h2 style="text-align: center; font-weight: 320; letter-spacing: 2px;">공지사항</h2>
+    <a data-th-href="@{/announcement/form(currentPage=${currentPage})}" style="font-size: 12px; font-weight: normal; text-align: right;">new</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th style="font-size: 12px; font-weight: normal; text-align: center;">번호</th>
+            <th style="font-size: 12px; font-weight: normal; text-align: center;">제목</th>
+            <th style="font-size: 12px; font-weight: normal; text-align: center;">작성자</th>
+            <th style="font-size: 12px; font-weight: normal; text-align: center;">등록일</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    <tr data-th-each="announcement : ${list}">
+        <td data-th-text="${announcement.no}">100</td>
+        <td style="text-align: center;">
+            <a data-th-href="@{/announcement/detail(no=${announcement.no},currentPage=${currentPage},isEdit=false)}" style="font-size: 14px;"
+               data-th-text="${announcement.title} ?: '제목없음'">게시글 제목</a>
+        </td>
+        <td data-th-text="${announcement.writer.name}">홍길동</td>
+        <td data-th-text="${#dates.format(announcement.createdDate, 'yyyy-MM-dd')}">2021-09-14</td>
+    </tr>
+
+    </tbody>
+
+</table>
+
+<nav aria-label="Page navigation">
+    <ul id="pagination" class="pagination horizontal-pagination">
+        <!-- 페이지 번호 추가 -->
+        <script>
+            // 전체 페이지 수와 현재 페이지를 서버에서 받아와야 합니다.
+            const totalPages = parseInt([[${size}]]);
+            const currentPage = parseInt([[${currentPage}]]);
+            const pageSize = parseInt([[${pageSize}]]);
+            const row = parseInt(10);
+            const actualSize = totalPages % pageSize == 0 ? parseInt(totalPages / pageSize) : parseInt(totalPages / pageSize) + 1;
+
+            const startPage = currentPage % row == 0 ? (parseInt(((currentPage-1) / row)) *row) + 1 : (parseInt((currentPage / row)) * row) + 1;
+            const endPage = startPage - 1 + Math.min(row, actualSize - startPage + 1);
+            const paginationElement = document.getElementById("pagination");
+
+            console.log("currentPage=  "+ currentPage);
+            console.log("startPage=  " + startPage);
+            console.log("endPage=  " + endPage);
+            console.log("actualSize=  " + actualSize);
+            console.log("totalPages=  " + totalPages);
+
+            if (currentPage === 1) {
+                paginationElement.innerHTML += `
+                    <li class="page-item disabled" style="visibility: hidden;"><a class="page-link" href="/announcement/list?currentPage=1">Previous</a></li>`;
+            } else {
+                 paginationElement.innerHTML += `
+                    <li class="page-item active"><a class="page-link" href="/announcement/list?currentPage=${currentPage - 1}">Previous</a></li>`;
+            }
+
+            // 페이지 번호 추가
+            for (let page = startPage; page <= endPage; page++) {
+                const pageItemClass = page === currentPage ? 'current-page' : '';
+                const pageStyle = page === currentPage ? 'font-weight: bold; color: blue;' : '';
+
+                // 현재 페이지에 해당하는 <li> 요소에 스타일을 추가하고 라인 번호를 표시합니다.
+                const pageLink = `
+                    <li class="page-item ${pageItemClass}" style="display: inline-block;">
+                        <a class="page-link" href="/announcement/list?currentPage=${page}" style="${pageStyle}">${page}</a>
+                    </li>
+                `;
+
+                paginationElement.innerHTML += pageLink;
+            }
+
+            if (currentPage >= actualSize) {
+                paginationElement.innerHTML += `
+                    <li class="page-item disabled" style="visibility: hidden;"><a class="page-link" href="/announcement/list?currentPage=${actualSize}">Next</a></li>`;
+            } else {
+                 paginationElement.innerHTML += `
+                    <li class="page-item active"><a class="page-link" href="/announcement/list?currentPage=${currentPage + 1}">Next</a></li>`;
+            }
+        </script>
+
+    </ul>
+</nav>
+</div>
+</div>
+
+<div data-th-replace="footer :: footer"></div>
+
+</body>
+</html>

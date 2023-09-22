@@ -19,10 +19,10 @@ public class AttachedFile implements Serializable {
   public int getNo() {
     return no;
   }
-
   public void setNo(int no) {
     this.no = no;
   }
+
 
   public String getOriginName() {
     return originName;
@@ -31,14 +31,13 @@ public class AttachedFile implements Serializable {
   public void setOriginName(String originName) {
     this.originName = originName;
   }
-
   public String getFilePath() {
     return filePath;
   }
-
   public void setFilePath(String filePath) {
     this.filePath = filePath;
   }
+
 
   // 최종부분에 지워야 하는 부분
   // 여기서부터

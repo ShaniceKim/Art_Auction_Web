@@ -5,33 +5,34 @@
 <mapper namespace="bitcamp.myapp.dao.ArticleDao">
 
     <resultMap id="articleMap" type="article">
-        <id column="article_no"         property="articleNo"/>
-        <result column="title"          property="title"/>
-        <result column="content"        property="content"/>
-        <result column="artist"         property="artist"/>
-        <result column="view_count"     property="viewCount"/>
-        <result column="created_date"   property="createdDate"/>
-        <result column="photo"          property="photo"/>
-        <result column="start_date"     property="startDate"/>
-        <result column="end_date"       property="endDate"/>
-        <result column="status"         property="status"/>
-        <result column="cur_price"      property="curPrice"/>
-        <result column="end_price"      property="endPrice"/>
-        <result column="bid_count"      property="bidCount"/>
+        <id column="article_no" property="articleNo"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="artist" property="artist"/>
+        <result column="view_count" property="viewCount"/>
+        <result column="created_date" property="createdDate"/>
+        <result column="photo" property="photo"/>
+        <result column="start_date" property="startDate"/>
+        <result column="end_date" property="endDate"/>
+        <result column="status" property="status"/>
+        <result column="cur_price" property="curPrice"/>
+        <result column="end_price" property="endPrice"/>
+        <result column="cur_bidder" property="curBidder"/>
+        <result column="bid_count" property="bidCount"/>
 
         <association property="writer" javaType="user">
-            <id column="user_no"            property="no"/>
-            <result column="authority"      property="authority"/>
-            <result column="email"          property="email"/>
-            <result column="password"       property="password"/>
-            <result column="name"           property="name"/>
-            <result column="phone"          property="phone"/>
-            <result column="zonecode"       property="zonecode"/>
-            <result column="address"        property="address"/>
-            <result column="detail_addr"    property="detailAddr"/>
-            <result column="join_date"      property="joinDate"/>
-            <result column="profile_photo"  property="profilePhoto"/>
-            <result column="point"          property="point"/>
+            <id column="user_no" property="no"/>
+            <result column="authority" property="authority"/>
+            <result column="email" property="email"/>
+            <result column="password" property="password"/>
+            <result column="name" property="name"/>
+            <result column="phone" property="phone"/>
+            <result column="zonecode" property="zonecode"/>
+            <result column="address" property="address"/>
+            <result column="detail_addr" property="detailAddr"/>
+            <result column="join_date" property="joinDate"/>
+            <result column="profile_photo" property="profilePhoto"/>
+            <result column="point" property="point"/>
         </association>
     </resultMap>
 
@@ -62,13 +63,25 @@
         A.article_no
     </select>
 
+    <select id="findByArtist" parameterType="String" resultMap="articleMap">
+        select
+        A.*, U.*
+        from
+        auction_article A inner join auction_user U on A.user_no=U.user_no
+        where
+        A.artist=#{artist}
+    </select>
+
     <update id="update" parameterType="article">
         update auction_article set
         title=#{title}
         ,content=#{content}
-        ,photo=#{photo}
-        ,cur_price=#{cur_price}
-        ,end_price=#{end_price}
+        ,cur_price=#{curPrice}
+        ,end_price=#{endPrice}
+        ,artist=#{artist}
+        <if test="photo != null">
+            ,photo=#{photo}
+        </if>
         where
         article_no=#{articleNo}
     </update>
@@ -87,9 +100,22 @@
     </delete>
 
     <update id="bid" parameterType="article">
-        update auction_article set
+        update auction_article
+        set
         cur_price=#{curPrice}
+        ,cur_bidder=#{curBidder}
         ,bid_count = bid_count + 1
+        where
+        article_no=#{articleNo}
+    </update>
+
+    <update id="buy" parameterType="article">
+        update auction_article
+        set
+        cur_price=#{endPrice}
+        ,cur_bidder=#{curBidder}
+        ,bid_count = bid_count + 1
+        ,status = #{status}
         where
         article_no=#{articleNo}
     </update>

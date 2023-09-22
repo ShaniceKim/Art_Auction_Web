@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* 기존 스타일 유지 */
+        label {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          cursor: pointer;
+        }
+        [type="checkbox"] {
+          appearance: none;
+        }
+        [type="checkbox"] {
+          appearance: none;
+          position: relative;
+          border: max(2px, 0.1em) solid gray;
+          border-radius: 1.25em;
+          width: 2.25em;
+          height: 1.25em;
+        }
+        [type="checkbox"]::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          width: 1em;
+          height: 1em;
+          border-radius: 50%;
+          transform: scale(0.8);
+          background-color: gray;
+          transition: left 250ms linear;
+        }
+        [type="checkbox"]:checked::before {
+          background-color: white;
+          left: 1em;
+        }
+        [type="checkbox"]:checked {
+          background-color: tomato;
+          border-color: tomato;
+        }
+        [type="checkbox"]:focus-visible {
+          outline-offset: max(2px, 0.1em);
+          outline: max(2px, 0.1em) solid tomato;
+        }
+        [type="checkbox"]:enabled:hover {
+          box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
+        }
+        [type="checkbox"]::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          width: 1em;
+          height: 1em;
+          border-radius: 50%;
+          transform: scale(0.8);
+          background-color: gray;
+          transition: left 250ms linear;
+        }
+
+        /* 수정된 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        a {
+        color: #000;
+        text-decoration: none;
+        text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+        }
+        form {
+            width: 40%;
+            margin: 210px auto;
+            padding: 20px;
+            border: 4px solid #D8D8D8;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label, input, textarea, button {
+            display: block;
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="file"] {
+            width: 100%;
+            max-width: 300px; /* 최대 너비 설정 */
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        textarea {
+            width: 100%;
+            max-width: 300px; /* 최대 너비 설정 */
+            height: 100px; /* 높이 조정 */
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        button {
+            background-color: #D8D8D8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .button-container {
+            display: flex; /* 아이템들을 가로로 배치하기 위해 flex 사용 */
+            align-items: center; /* 수직 중앙 정렬 */
+        }
+        button {
+            margin-right: 10px; /* 등록 버튼과 상단 고정 버튼 사이의 간격 조절 */
+        }
+        label {
+            margin-left: 10px; /* 등록 버튼과 상단 고정 버튼 사이의 간격 조절 */
+        }
+    </style>
+
+    <meta charset='UTF-8'>
+    <title>BitGallery</title>
+</head>
+<body>
+
+<div data-th-replace="header :: header"></div>
+
+<div style="display: flex; justify-content: center; align-items: center; padding: 10px; min-height: calc(100vh - 130px);">
+<form data-th-action="@{/announcement/add}" method='post' enctype='multipart/form-data' style="margin:10px;">
+
+    <h2 style="text-align: center; font-weight: 320; letter-spacing: 2px;">공지사항 작성</h2>
+
+    <input type='text' name='title' placeholder="제목을 입력하세요." style="margin-bottom: 10px; border-radius: 20px; text-align: center;">
+    <textarea name='content' placeholder="내용을 입력하세요." style="margin-bottom: 10px; border-radius: 20px; text-align: center;"></textarea>
+    <input type='file' name='files' multiple style="margin-bottom: 10px; border-radius: 20px; text-align: center; font-size:10px;">
+    <!--<input type='hidden'>-->
+    <input type='hidden' name='currentPage' data-th-value=${currentPage}>
+    <button type="submit" style="width: 15%; height: 20%; border-radius: 20px;">등록</button>
+    <label>
+        <input role="switch" type="checkbox" name="fixed" id="switch" pattern="^[0-9]+$" value="1">
+    </label>
+</form>
+</div>
+<div data-th-replace="footer :: footer"></div>
+
+
+</body>
+</html>
