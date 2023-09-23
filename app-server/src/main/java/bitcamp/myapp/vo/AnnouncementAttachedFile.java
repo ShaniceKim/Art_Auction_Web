@@ -12,7 +12,7 @@ public class AnnouncementAttachedFile implements Serializable {
 
   @Override
   public String toString() {
-    return "NoticeAttachedFile{" +
+    return  "AnnouncementAttachedFile{" +
             "no=" + no +
             ", originName='" + originName + '\'' +
             ", filePath='" + filePath + '\'' +

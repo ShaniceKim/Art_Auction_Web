@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset='UTF-8'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/detail.css}" />
+  <title>환전 게시판 세부 정보 및 수정</title>
+</head>
+<body>
+<div data-th-replace="header :: header"></div>
+
+<div class="container" >
+  <!-- 제목 -->
+  <h2 data-th-text="${exchange.title}">게시판 상세페이지 제목</h2>
+
+  <!-- 작성자 및 생성일 -->
+  <div>
+    <strong>작성자: </strong><span data-th-text="${exchange.user.name}">ggg</span>
+    <strong>생성일: </strong><span data-th-text="${#dates.format(exchange.createdDate, 'yy-MM-dd HH:mm')}">23-09-14 15:34</span>
+  </div>
+
+  <!-- 표 부분 -->
+  <table>
+    <tr>
+      <th>이름</th>
+      <td data-th-text="${name}"></td>
+    </tr>
+    <tr>
+      <th>계좌번호</th>
+      <td data-th-text="${number}"></td>
+    </tr>
+    <tr>
+      <th>은행</th>
+      <td data-th-text="${bank}"></td>
+    </tr>
+    <tr>
+      <th>환전할 금액</th>
+      <td data-th-text="${exchange.exchangePoint}"></td>
+    </tr>
+  </table>
+
+  <a data-th-href="@{/exchange/delete(no=${exchange.no})}">삭제</a>
+  <a data-th-href="@{/exchange/list}">목록</a>
+</div>
+<div data-th-replace="footer :: footer"></div>
+</body>
+</html>

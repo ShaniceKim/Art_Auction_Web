@@ -10,14 +10,14 @@ $(document).ready(function() {
     $('#calendar').fullCalendar({
         dayClick: function(date, jsEvent, view) {
             const clickedDate = date.format();
-            $.get("/auctionArticle/getEvent", { date: clickedDate }, function(data) {
+            $.get("/article/getEvent", { date: clickedDate }, function(data) {
                 let eventDetailHtml = '';
-                data.forEach(auctionArticle => {
-                    let formattedStartDate = formatDate(auctionArticle.startDateStr);
-                    let formattedEndDate = formatDate(auctionArticle.endDateStr);
+                data.forEach(article => {
+                    let formattedStartDate = formatDate(article.startDateStr);
+                    let formattedEndDate = formatDate(article.endDateStr);
                     eventDetailHtml += `
                         <div>
-                            <strong>Title:</strong> ${auctionArticle.title}
+                            <strong>Title:</strong> ${article.title}
                             <br>
                             <strong>Start Date:</strong> ${formattedStartDate}
                             <br>

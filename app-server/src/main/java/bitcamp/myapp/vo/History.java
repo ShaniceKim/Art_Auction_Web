@@ -10,6 +10,20 @@ public class History {
     private Timestamp bidDate;
     private int winBid;
 
+    @Override
+    public String toString() {
+        return "History{" +
+                "historyNo=" + historyNo +
+                ", bidder=" + bidder +
+                ", article=" + article +
+                ", price=" + price +
+                ", bidDate=" + bidDate +
+                ", winBid=" + winBid +
+                '}';
+    }
+
+    public History() {}
+
     public History(User bidder, Article article, int price) {
         this.bidder = bidder;
         this.article = article;

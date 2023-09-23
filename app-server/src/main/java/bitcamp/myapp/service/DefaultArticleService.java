@@ -120,4 +120,19 @@ public class DefaultArticleService implements ArticleService {
   public int buy(Article article) {
     return articleDao.buy(article);
   }
+
+  @Override
+  public int updateArticleBidNum(int articleNo) throws Exception {
+    return articleDao.updateArticleBidNum(articleNo);
+  }
+
+  @Override
+  public void updateArticleBidPoint(int articleNo, int bidAmount) {
+    articleDao.updateArticleBidPoint(articleNo,bidAmount);
+  }
+
+  @Override
+  public void updateArticleStatus(int articleNo) throws Exception {
+    articleDao.updateArticleStatus(articleNo);
+  }
 }

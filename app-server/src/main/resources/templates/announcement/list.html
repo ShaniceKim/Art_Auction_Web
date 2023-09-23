@@ -56,6 +56,16 @@
             align-items: center;
             min-height: calc(100vh - 130px); /* 화면 높이에서 헤더와 푸터 높이를 뺀 만큼의 높이 설정 */
         }
+        /* 페이지네이션 가로 설정 */
+            .horizontal-pagination .page-item {
+            display: inline-block;
+        }
+
+        /* 숫자간 거리 설정 */
+        .horizontal-pagination .page-link {
+            padding: 8px 12px;
+            margin: 0 4px;
+        }
 
 table {
     border-collapse: separate; /* 'collapse' 대신 'separate'로 변경 */
@@ -119,61 +129,61 @@ img {
 
 </table>
 
-<nav aria-label="Page navigation">
-    <ul id="pagination" class="pagination horizontal-pagination">
-        <!-- 페이지 번호 추가 -->
-        <script>
-            // 전체 페이지 수와 현재 페이지를 서버에서 받아와야 합니다.
-            const totalPages = parseInt([[${size}]]);
-            const currentPage = parseInt([[${currentPage}]]);
-            const pageSize = parseInt([[${pageSize}]]);
-            const row = parseInt(10);
-            const actualSize = totalPages % pageSize == 0 ? parseInt(totalPages / pageSize) : parseInt(totalPages / pageSize) + 1;
+    <nav aria-label="Page navigation">
+        <ul id="pagination" class="pagination horizontal-pagination">
+            <!-- 페이지 번호 추가 -->
+            <script>
+                // 전체 페이지 수와 현재 페이지를 서버에서 받아와야 합니다.
+                const totalPages = parseInt([[${size}]]);
+                const currentPage = parseInt([[${currentPage}]]);
+                const pageSize = parseInt([[${pageSize}]]);
+                const row = parseInt(10);
+                const actualSize = totalPages % pageSize == 0 ? parseInt(totalPages / pageSize) : parseInt(totalPages / pageSize) + 1;
 
-            const startPage = currentPage % row == 0 ? (parseInt(((currentPage-1) / row)) *row) + 1 : (parseInt((currentPage / row)) * row) + 1;
-            const endPage = startPage - 1 + Math.min(row, actualSize - startPage + 1);
-            const paginationElement = document.getElementById("pagination");
+                const startPage = currentPage % row == 0 ? (parseInt(((currentPage-1) / row)) *row) + 1 : (parseInt((currentPage / row)) * row) + 1;
+                const endPage = startPage - 1 + Math.min(row, actualSize - startPage + 1);
+                const paginationElement = document.getElementById("pagination");
 
-            console.log("currentPage=  "+ currentPage);
-            console.log("startPage=  " + startPage);
-            console.log("endPage=  " + endPage);
-            console.log("actualSize=  " + actualSize);
-            console.log("totalPages=  " + totalPages);
+                console.log("currentPage=  "+ currentPage);
+                console.log("startPage=  " + startPage);
+                console.log("endPage=  " + endPage);
+                console.log("actualSize=  " + actualSize);
+                console.log("totalPages=  " + totalPages);
 
-            if (currentPage === 1) {
-                paginationElement.innerHTML += `
-                    <li class="page-item disabled" style="visibility: hidden;"><a class="page-link" href="/announcement/list?currentPage=1">Previous</a></li>`;
-            } else {
-                 paginationElement.innerHTML += `
-                    <li class="page-item active"><a class="page-link" href="/announcement/list?currentPage=${currentPage - 1}">Previous</a></li>`;
-            }
+                if (currentPage === 1) {
+                    paginationElement.innerHTML += `
+                        <li class="page-item disabled" style="visibility: hidden;"><a class="page-link" href="/announcement/list?currentPage=1">Previous</a></li>`;
+                } else {
+                     paginationElement.innerHTML += `
+                        <li class="page-item active"><a class="page-link" href="/announcement/list?currentPage=${currentPage - 1}">Previous</a></li>`;
+                }
 
-            // 페이지 번호 추가
-            for (let page = startPage; page <= endPage; page++) {
-                const pageItemClass = page === currentPage ? 'current-page' : '';
-                const pageStyle = page === currentPage ? 'font-weight: bold; color: blue;' : '';
+                // 페이지 번호 추가
+                for (let page = startPage; page <= endPage; page++) {
+                    const pageItemClass = page === currentPage ? 'current-page' : '';
+                    const pageStyle = page === currentPage ? 'font-weight: bold; color: blue;' : '';
 
-                // 현재 페이지에 해당하는 <li> 요소에 스타일을 추가하고 라인 번호를 표시합니다.
-                const pageLink = `
-                    <li class="page-item ${pageItemClass}" style="display: inline-block;">
-                        <a class="page-link" href="/announcement/list?currentPage=${page}" style="${pageStyle}">${page}</a>
-                    </li>
-                `;
+                    // 현재 페이지에 해당하는 <li> 요소에 스타일을 추가하고 라인 번호를 표시합니다.
+                    const pageLink = `
+                        <li class="page-item ${pageItemClass}" style="display: inline-block;">
+                            <a class="page-link" href="/announcement/list?currentPage=${page}" style="${pageStyle}">${page}</a>
+                        </li>
+                    `;
 
-                paginationElement.innerHTML += pageLink;
-            }
+                    paginationElement.innerHTML += pageLink;
+                }
 
-            if (currentPage >= actualSize) {
-                paginationElement.innerHTML += `
-                    <li class="page-item disabled" style="visibility: hidden;"><a class="page-link" href="/announcement/list?currentPage=${actualSize}">Next</a></li>`;
-            } else {
-                 paginationElement.innerHTML += `
-                    <li class="page-item active"><a class="page-link" href="/announcement/list?currentPage=${currentPage + 1}">Next</a></li>`;
-            }
-        </script>
+                if (currentPage >= actualSize) {
+                    paginationElement.innerHTML += `
+                        <li class="page-item disabled" style="visibility: hidden;"><a class="page-link" href="/announcement/list?currentPage=${actualSize}">Next</a></li>`;
+                } else {
+                     paginationElement.innerHTML += `
+                        <li class="page-item active"><a class="page-link" href="/announcement/list?currentPage=${currentPage + 1}">Next</a></li>`;
+                }
+            </script>
 
-    </ul>
-</nav>
+        </ul>
+    </nav>
 </div>
 </div>
 

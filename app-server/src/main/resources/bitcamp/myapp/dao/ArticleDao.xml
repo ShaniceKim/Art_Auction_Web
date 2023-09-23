@@ -93,6 +93,23 @@
         article_no=#{articleNo}
     </update>
 
+
+    <update id="updateArticleBidNum" parameterType="int">
+        update auction_article set
+        bid_Count = bid_Count + 1
+        where
+        article_no=#{articleNo}
+    </update>
+
+
+    <update id="updateArticleBidPoint" parameterType="map">
+        update auction_article set
+        cur_price = #{bidAmount}
+        where
+        article_no=#{articleNo}
+    </update>
+
+
     <delete id="delete" parameterType="int">
         delete from auction_article
         where
@@ -108,6 +125,7 @@
         where
         article_no=#{articleNo}
     </update>
+
 
     <update id="buy" parameterType="article">
         update auction_article
@@ -143,4 +161,11 @@
         order by
         a.article_no desc
     </select>
+
+
+    <update id="updateArticleStatus" parameterType="int">
+        update auction_article
+        set status = 'end'
+        where article_no = #{articleNo}
+    </update>
 </mapper>

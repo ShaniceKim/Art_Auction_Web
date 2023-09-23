@@ -88,10 +88,11 @@
   </update>
 
   <update id="update" parameterType="announcement">
-    update auction_announcement set
+    UPDATE auction_announcement SET
     title=#{title},
-    content=#{content}
-    where
+    content=#{content},
+    fixed = #{fixed}
+    WHERE
     announcement_no=#{no}
   </update>
 

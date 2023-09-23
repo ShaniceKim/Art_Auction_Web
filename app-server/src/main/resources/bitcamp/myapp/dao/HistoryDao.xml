@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bitcamp.myapp.dao.HistoryDao">
+
+    <resultMap type="history" id="historyMap" >
+        <id column="history_no" property="historyNo"/>
+        <result column="price" property="price"/>
+        <result column="bid_date" property="bidDate"/>
+        <result column="win_bid" property="winBid"/>
+
+        <association property="bidder" javaType="User">
+            <id column="user_no" property="no"/>
+            <result column="authority" property="authority"/>
+            <result column="email" property="email"/>
+            <result column="password" property="password"/>
+            <result column="name" property="name"/>
+            <result column="phone" property="phone"/>
+            <result column="zonecode" property="zonecode"/>
+            <result column="address" property="address"/>
+            <result column="detail_addr" property="detailAddr"/>
+            <result column="join_date" property="joinDate"/>
+            <result column="profile_photo" property="profilePhoto"/>
+            <result column="point" property="point"/>
+        </association>
+
+        <association property="article" javaType="Article">
+            <id column="article_no" property="articleNo"/>
+            <result column="title" property="title"/>
+            <result column="content" property="content"/>
+            <result column="artist" property="artist"/>
+            <result column="view_count" property="viewCount"/>
+            <result column="created_date" property="createdDate"/>
+            <result column="photo" property="photo"/>
+            <result column="start_date" property="startDate"/>
+            <result column="end_date" property="endDate"/>
+            <result column="status" property="status"/>
+            <result column="cur_price" property="curPrice"/>
+            <result column="end_price" property="endPrice"/>
+            <result column="cur_bidder" property="curBidder"/>
+            <result column="bid_count" property="bidCount"/>
+        </association>
+    </resultMap>
+
+    <insert id="insert" parameterType="history">
+        insert into auction_history(user_no,article_no,price)
+        values(#{bidder.no},#{article.articleNo},#{price})
+    </insert>
+
+    <select id="findAll" parameterType="int" resultMap="historyMap">
+        select
+        H.history_no,
+        H.price,
+        H.bid_date,
+        H.win_bid,
+        U.user_no,
+        A.title,
+        A.article_no
+        from
+        auction_history H
+        inner join auction_user U on H.user_no=U.user_no
+        inner join auction_article A on H.article_no=A.article_no
+        where
+        H.user_no=#{userNo}
+    </select>
+</mapper>

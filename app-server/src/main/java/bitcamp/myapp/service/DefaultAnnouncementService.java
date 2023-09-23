@@ -46,9 +46,10 @@ public class DefaultAnnouncementService implements AnnouncementService {
       List<Announcement> subList = list.stream().skip(startPage).limit(endPage).toList();
 
 //      model.addAttribute("fixedList", this.fixedList());
-      model.addAttribute("pageSize", size);
+      model.addAttribute("size", size);
       model.addAttribute("list", subList);
       model.addAttribute("currentPage", currentPage);
+      model.addAttribute("pageSize", pageSize);
 
     } catch (Exception e) {
       throw e;

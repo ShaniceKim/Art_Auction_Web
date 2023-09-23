@@ -1,72 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset='UTF-8'>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/form.css}" />
     <title>환전 게시판 입력 폼</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-
-        h2 {
-            text-align: center;
-            margin-top: 50px;
-            color: #333;
-        }
-
-        form {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #555;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            box-sizing: border-box; /* 패딩과 테두리를 너비에 포함하도록 설정 */
-        }
-
-        input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-    </style>
 </head>
-<body>
 
+<body data-th-attr="data-user-points=${loginUser.point}">
 <div data-th-replace="header :: header"></div>
 
-<form data-th-action="@{/exchange/add}" method='post'>
+<form th:action="@{/exchange/add}" method='post' onsubmit="return validateForm();">
+
     <label for="name">이름:</label><br>
     <input type="text" id="name" name="name" required><br><br>
 
@@ -75,135 +21,32 @@
 
     <label for="bank">은행:</label><br>
     <select id="bank" name="bank">
-        <option value="카카오뱅크">카카오뱅크</option>
-        <option value="NH농협">NH농협</option>
-        <option value="KB국민">KB국민</option>
-        <option value="신한">신한</option>
-        <option value="하나">하나</option>
-        <option value="우리">우리</option>
+        <option value="선택">선택</option>
+        <option value="카카오뱅크">카카오뱅크 (12자리)</option>
+        <option value="신한">신한 (12자리)</option>
+        <option value="NH농협">NH농협 (13자리)</option>
+        <option value="하나">하나 (13자리)</option>
+        <option value="우리">우리 (13자리)</option>
+        <option value="KB국민">KB국민 (14자리)</option>
     </select><br><br>
 
 
-
     <div style="display: flex; align-items: center;">
-        <label for="amount" style="text-align: left;">환전할 금액 :</label>
-        <span style="color: blue; font-size: 11.5px; margin-left: auto;">(보유 포인트 : 1000)</span>
-    </div>
-    <input type="text" id="amount" name="amount" required><br>
+        <label for="exchangePoint" style="text-align: left;">환전할 금액 :</label>
 
+        <span style="color: blue; font-size: 15px; margin-left: auto;" id="userPoints"
+              data-th-text="'보유포인트 : ' + ${session.loginUser.point} + '원'"></span>
+
+    </div>
+    <input type="text" id="exchangePoint" name="exchangePoint" required><br>
+    <input type="hidden" id="userPointsValue" th:value="${loginUser.point}" data-user-points="${loginUser.point}" />
+    <input type="hidden" id="content" name="content">
     <input type="submit" value="제출">
 </form>
 
 <div data-th-replace="footer :: footer"></div>
 
-<script>
 
-    // 은행별로 하이픈 적용
-    var selectedBank = "카카오뱅크";
-
-    var accountNumberInput = document.getElementById("accountNumber");
-    var bankSelect = document.getElementById("bank");
-
-<!--    // 페이지 로드 시 초기 은행 선택을 기본값(카카오뱅크)으로 설정-->
-<!--    var selectedBank = "카카오뱅크";-->
-
-    // 은행 변경 시 하이픈 규칙 업데이트
-    bankSelect.addEventListener("change", function() {
-        selectedBank = bankSelect.value;
-        updateHyphenRule(); // 은행 변경 시 하이픈 규칙 업데이트
-    });
-
-    // 페이지 로드 시 초기 은행에 따라 하이픈 규칙 적용
-    updateHyphenRule();
-
-    // 은행 변경 시 하이픈 규칙 업데이트하는 함수
-    function updateHyphenRule() {
-        var accountNumber = accountNumberInput.value;
-
-        // 은행에 따라 하이픈 규칙 적용
-        switch (selectedBank) {
-            case "카카오뱅크":
-                // 카카오뱅크의 경우, 계좌번호 형식에 따라 하이픈을 추가
-                accountNumber = accountNumber.replace(/(\d{3})(\d{2})(\d{7})/, "$1-$2-$3");
-                break;
-            case "NH농협":
-                // NH농협의 경우, 다른 형식에 따라 하이픈을 추가
-                accountNumber = accountNumber.replace(/(\d{3})(\d{4})(\d{4})(\d{2})/, "$1-$2-$3-$4");
-                break;
-            case "KB국민":
-                // KB국민의 경우, 계좌번호 형식에 따라 하이픈을 추가
-                accountNumber = accountNumber.replace(/(\d{6})(\d{2})(\d{6})/, "$1-$2-$3");
-                break;
-            case "신한":
-                // 신한의 경우, 다른 형식에 따라 하이픈을 추가
-                accountNumber = accountNumber.replace(/(\d{3})(\d{3})(\d{6})/, "$1-$2-$3");
-                break;
-            case "하나":
-                // 하나의 경우, 다른 형식에 따라 하이픈을 추가
-                accountNumber = accountNumber.replace(/(\d{4})(\d{3})(\d{6})/, "$1-$2-$3");
-                break;
-            case "우리":
-                // 우리의 경우, 다른 형식에 따라 하이픈을 추가
-                accountNumber = accountNumber.replace(/(\d{4})(\d{3})(\d{6})/, "$1-$2-$3");
-                break;
-        }
-
-        // 계좌번호 입력란에 변경된 값 설정
-        accountNumberInput.value = accountNumber;
-    }
-
-    // 입력 중에 하이픈 자동 추가
-    accountNumberInput.addEventListener("input", function() {
-        var formattedAccountNumber = accountNumberInput.value.replace(/[^0-9-]/g, ""); // 숫자와 하이픈만 남김
-        var parts = formattedAccountNumber.split("-"); // 하이픈을 기준으로 나눔
-        var formattedParts = [];
-
-        // 각 파트에 하이픈 추가
-        for (var i = 0; i < parts.length; i++) {
-            if (i === 0) {
-                // 첫 번째 파트는 은행에 따라 길이가 다르므로 그대로 유지
-                formattedParts.push(parts[i]);
-            } else {
-                // 나머지 파트는 4자리로 만들고 하이픈 추가
-                var part = parts[i].substr(0, 4);
-                formattedParts.push(part);
-            }
-        }
-
-        // 하이픈으로 연결된 문자열 생성
-        var formattedAccountNumberWithHyphen = formattedParts.join("-");
-
-        // 입력란에 적용
-        accountNumberInput.value = formattedAccountNumberWithHyphen;
-    });
-
-    // "환전할 금액" 입력란의 값이 숫자인지 확인하고 변환하는 함수
-    function validateAndConvertAmount() {
-        var amountInput = document.getElementById("amount");
-        var inputValue = amountInput.value;
-
-        // 입력값이 숫자인지 확인 (정규식을 사용하여 검사)
-        if (/^\d+$/.test(inputValue)) {
-            // 숫자로 변환
-            var numericAmount = parseFloat(inputValue);
-            // 필요한 작업 수행 (예: 서버로 데이터 전송 또는 다른 처리)
-            console.log("환전할 금액 (숫자):", numericAmount);
-        } else {
-            // 숫자가 아닌 경우 사용자에게 알림
-            alert("환전 금액을 숫자로 입력하세요.");
-            // 입력란을 비우거나 다른 작업 수행
-            amountInput.value = "";
-        }
-    }
-
-    // "제출" 버튼 클릭 시 숫자 확인 및 변환 함수 호출
-    var submitButton = document.querySelector('input[type="submit"]');
-    submitButton.addEventListener("click", function(event) {
-        event.preventDefault(); // 폼 제출 방지
-        validateAndConvertAmount(); // 함수 호출
-    });
-
-</script>
-
+<script src="/js/form.js" defer></script>
 </body>
 </html>

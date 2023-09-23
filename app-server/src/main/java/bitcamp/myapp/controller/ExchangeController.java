@@ -49,11 +49,20 @@ public class ExchangeController {
       return "redirect:/auth/form";
     }
 
+    int requestedPoints = exchange.getExchangePoint();
+
     exchange.setUser(loginUser);
     exchange.setTitle(loginUser.getName() + "님 환전요청");
     exchange.setCreatedDate(new Date());
-
     exchangeService.add(exchange);
+
+    // 포인트 차감하고 DB에 업데이트
+    userService.updateUserPoints(Integer.toString(loginUser.getNo()), requestedPoints);
+
+    // 업데이트된 loginUser 정보를 다시 데이터베이스에서 가져와서 세션을 업데이트
+    User updatedUser = userService.get(loginUser.getNo());
+    session.setAttribute("loginUser", updatedUser);
+
     return "redirect:/exchange/list";
   }
 
@@ -83,6 +92,8 @@ public class ExchangeController {
       model.addAttribute("currentUserId", loginUser.getNo());
     }
   }
+
+
 
   @GetMapping("detail/{no}")
   public String detail(@PathVariable int no, Model model, HttpSession session, RedirectAttributes redirectAttrs) throws Exception {
@@ -123,7 +134,7 @@ public class ExchangeController {
 
     System.out.println("User No from request: " + userNo);
 
-    // userNo 값을 사용하여 User 객체를 검색합니다.
+    // userNo 값을 사용하여 User 객체를 검색
     User user = userService.get(exchange.getUser().getNo());
     if (user == null) {
       throw new Exception("유효하지 않은 사용자 번호입니다.");

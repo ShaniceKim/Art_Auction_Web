@@ -25,7 +25,15 @@ public interface ArticleDao {
 
   int updateViewCount(int articleNo);
 
+  int updateArticleBidNum(int articleNo);
+
+
+
   int bid(Article article);
 
   int buy(Article article);
+
+  void updateArticleStatus(@Param("articleNo") int articleNo);
+
+  void updateArticleBidPoint(@Param("articleNo") int articleNo, @Param("bidAmount") int bidAmount);
 }

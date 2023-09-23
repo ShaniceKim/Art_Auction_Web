@@ -45,6 +45,12 @@ public class ArticleController {
       return "redirect:/auth/form";
     }
 
+    if (article.getEndPrice() <= article.getCurPrice()) {
+      throw new Exception("시작가격은 즉시구입 가격보다 높아야 합니다.");
+    }
+    if(article.getCurPrice()*2 >= article.getEndPrice()) {
+      throw new Exception("즉시구입 가격은 시작가격의 2배 이상으로 해야합니다.");
+    }
 
     article.setWriter(loginUser);
 

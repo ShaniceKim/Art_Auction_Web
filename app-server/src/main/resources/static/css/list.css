@@ -1,0 +1,55 @@
+/* 페이지 스타일 */
+body {
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* 표 스타일 */
+table {
+    width: 60%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* 버튼 스타일 */
+.request-button-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 60%;
+    padding-top: 20px;
+}
+.request-button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+.request-button:hover {
+    background-color: #0056b3;
+}
+
+/* 페이지 컨테이너 스타일 */
+.page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #ffffff;
+}
