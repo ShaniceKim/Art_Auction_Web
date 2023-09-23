@@ -6,127 +6,63 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>MyPage</title>
 
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
     <!-- 아임포트 라이브러리 추가 -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
 
 
-
     <!-- Stylesheet -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/mypage.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/profile.css}">
-    <script th:src="@{/js/profile.js}"></script>
-    <script th:src="@{/js/bidScript.js}"></script>
-    <script th:src="@{/js/chargeScript.js}"></script>
 
     <style>
 
         a {
-color: #000;
-text-decoration: none;
-text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
-}
-
+        color: #000;
+        text-decoration: none;
+        text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
+        }
 
     </style>
 
 </head>
+
 <body>
 <div data-th-replace="header :: header"></div>
-<div class="container">
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner">
-            <div class="item active">
 
-                <!-- 사용자 정보 패널 -->
-                <div class="card card-container">
-                    <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
-                    <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
-                    <p id="profile-name" class="profile-name-card">
-                        <span id="userName" data-th-text="${session.loginUser.name}+님 + ', 안녕하세요.'"></span><br>
-                    </p>
+<!-- 사용자 정보 패널 -->
+<div class="card card-container">
+    <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+    <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+    <p id="profile-name" class="profile-name-card">
+        <span id="userName" data-th-text="${session.loginUser.name}+님 + ', 안녕하세요.'"></span><br>
+    </p>
 
-                    <br>
-                    <span id="userId" data-th-text="'회원번호 : ' + ${session.loginUser.no}" style="display: block; text-align: center;"></span>
-                    <span id="email" data-th-text="'이메일 : ' + ${session.loginUser.email}" style="display: block; text-align: center;"></span>
-                    <span id="phone" data-th-text="'핸드폰번호 : ' + ${session.loginUser.phone}" style="display: block; text-align: center;"></span>
+    <br>
+    <span id="userId" data-th-text="'회원번호 : ' + ${session.loginUser.no}" style="display: block; text-align: center;"></span>
+    <span id="email" data-th-text="'이메일 : ' + ${session.loginUser.email}" style="display: block; text-align: center;"></span>
+    <span id="phone" data-th-text="'핸드폰번호 : ' + ${session.loginUser.phone}" style="display: block; text-align: center;"></span>
 
-
-                    <!-- 포인트 충전 입력 필드 -->
-                    <div style="display: flex; align-items: center;">
-                        <input type="text" id="rechargeAmount" style=" border: none; text-align: center; font-size: 12px; width: 50%; margin-left:50px;" placeholder="충전할 포인트 입력" onkeyup="formatCurrency(this)">
-                        <button id="rechargeButton" style="font-size: 12px;">충전</button><br>
-                    </div>
-
-
-                    <!-- 결과 표시를 위한 엘리먼트 -->
-                    <div id="result"></div>
-
-                    <!-- 세션에서 사용자 포인트를 HTML에 포함 -->
-                    <span id="userPoints" style="text-align: center; font-size: 11px;" data-th-text="'보유포인트 : ' + ${session.loginUser.point}+원"></span>
-
-
-                </div><!-- /card-container -->
-
-
-                <div class="carousel-caption">
-
-                </div>
-            </div>
-            <!-- End Item -->
-            <div class="item">
-
-                <div class="carousel-caption">
-                    <h3>
-                        Headline</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-                        tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem
-                        ipsum dolor sit amet, consetetur sadipscing elitr.</p>
-                </div>
-            </div>
-            <!-- End Item -->
-            <div class="item">
-
-                <div class="carousel-caption">
-                    <h3>
-                        Headline</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-                        tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem
-                        ipsum dolor sit amet, consetetur sadipscing elitr.</p>
-                </div>
-            </div>
-            <!-- End Item -->
-            <div class="item">
-
-                <div class="carousel-caption">
-                    <h3>
-                        Headline</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-                        tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem
-                        ipsum dolor sit amet, consetetur sadipscing elitr.</p>
-                </div>
-            </div>
-            <!-- End Item -->
-        </div>
-        <!-- End Carousel Inner -->
-        <ul class="nav nav-pills nav-justified">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"><a href="#">내 정보</a></li>
-            <li data-target="#myCarousel" data-slide-to="1"><a href="#">환전 내역</a></li>
-            <li data-target="#myCarousel" data-slide-to="2"><a href="#">입찰 내역</a></li>
-        </ul>
+    <!-- 포인트 충전 입력 필드 -->
+    <div style="display: flex; align-items: center;">
+        <input type="text" id="rechargeAmount" style=" border: none; text-align: center; font-size: 12px; width: 50%; margin-left:50px;" placeholder="충전할 포인트 입력" onkeyup="formatCurrency(this)">
+        <button id="rechargeButton" style="font-size: 12px;">충전</button><br>
     </div>
-    <!-- End Carousel -->
-</div>
 
+    <!-- 결과 표시를 위한 엘리먼트 -->
+    <div id="result"></div>
+
+    <!-- HTML 태그에 삽입 -->
+    <div id="userNo" data-th-text="${session.loginUser.no}" style="display: none;"></div>
+    <div id="userPoint" data-th-text="${session.loginUser.point}" style="display: none;"></div>
+
+</div><!-- /card-container -->
+
+<script src="/js/chargeScript.js"></script>
 </body>
-</html>ㅡ
+</html>
