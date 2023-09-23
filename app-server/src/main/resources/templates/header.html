@@ -63,10 +63,9 @@
         <li><a href='/article/list?status=end&currentPage=1' style="margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">종료경매</a></li>
 
         <li data-th-if="${session.loginUser != null}" style="display: flex; align-items: center; margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">
-            <a data-th-href="@{/chargePoint}">
-                <span data-th-text="'&quot;' + ${session.loginUser.name} + '&quot;님, 보유 포인트 : ' + ${session.loginUser.point}" style="text-decoration: none; cursor: pointer;"></span>
+            <a data-th-href="@{/points/chargePoint}">
+                <span data-th-text="'&quot;' + ${session.loginUser.name.toUpperCase()} + '&quot;님, 보유 포인트 : ' + ${session.loginUser.point}" style="text-decoration: none; cursor: pointer;"></span>
             </a>
-
             <br>
             <a href='/auth/logout' style="font-size: 7px; margin-left: 40px;">[로그아웃]</a>
         </li>
