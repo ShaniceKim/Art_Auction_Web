@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>MyPage</title>
-
 
     <!-- 아임포트 라이브러리 추가 -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -17,13 +17,18 @@
 
     <!-- Stylesheet -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/mypage.css}">
-    <link rel="stylesheet" th:href="@{/css/list.css}" />
+    <link rel="stylesheet" th:href="@{/css/list.css}"/>
 
     <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
         a {
-        color: #000;
-        text-decoration: none;
-        text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
+            text-decoration: none;
+            text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
+            font-weight: 300;
         }
     </style>
 
@@ -40,42 +45,50 @@
 <!-- 현재 로그인한 사용자의 ID를 가져옴 -->
 <div th:with="currentUserId=${session.loginUser.no}" style="display:none;"></div>
 
-
 <br>
 
-                <!-- 사용자 정보 패널 -->
-                <div class="card card-container">
-                    <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
-                    <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
-                    <p id="profile-name" class="profile-name-card">
-                        <span id="userName" data-th-text="${session.loginUser.name}+님 + ', 안녕하세요.'"></span><br>
-                    </p>
-
-                    <br>
-                    <span id="userId" data-th-text="'회원번호 : ' + ${session.loginUser.no}" style="display: block; text-align: center;"></span>
-                    <span id="email" data-th-text="'이메일 : ' + ${session.loginUser.email}" style="display: block; text-align: center;"></span>
-                    <span id="phone" data-th-text="'핸드폰번호 : ' + ${session.loginUser.phone}" style="display: block; text-align: center;"></span>
-<br>
-                    <!-- 포인트 충전 입력 필드 -->
-                    <div style="display: flex; align-items: center;">
-                        <input type="text" id="rechargeAmount" style=" border: none; text-align: center; font-size: 12px; width: 50%; margin-left:50px;" placeholder="충전할 포인트 입력" onkeyup="formatCurrency(this)">
-                        <button id="rechargeButton" style="font-size: 12px;">충전</button><br>
-                    </div>
-
-                    <!-- 결과 표시를 위한 엘리먼트 -->
-                    <div id="result"></div>
-
-                    <!-- HTML 태그에 삽입 -->
-                    <div id="userNo" data-th-text="${session.loginUser.no}" style="display: none;"></div>
-                    <div id="userPoint" data-th-text="${session.loginUser.point}" style="display: none;"></div>
-
-                </div><!-- /card-container -->
-<br>
+<!-- 사용자 정보 패널 -->
+<div class="card card-container">
 
 
-<div class="container">
+    <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+    <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"/>
+    <p id="profile-name" class="profile-name-card">
+        <span id="userName" data-th-text="${session.loginUser.name}+님 + ', 안녕하세요.'"></span>
+    </p>
+    <div style="text-align: center;">
+        <a href="/user/edit" style="text-decoration: none; font-size:13px;">회원정보 수정</a>
+    </div>
+    <br>
+    <span id="email" data-th-text="'이메일 : ' + ${session.loginUser.email}"
+          style="display: block; text-align: center; font-weight: 300;"></span>
+    <span id="phone" data-th-text="'핸드폰번호 : ' + ${session.loginUser.phone}"
+          style="display: block; text-align: center; font-weight: 300;"></span>
+    <span id="address" data-th-text="'주소 : ' + ${session.loginUser.address}"
+          style="display: block; text-align: center; font-weight: 300;"></span>
+
+    <br>
+    <!-- 포인트 충전 입력 필드 -->
+    <div style="display: flex; align-items: center;">
+        <input type="text" id="rechargeAmount"
+               style=" border: none; text-align: center; font-size: 12px; width: 50%; margin-left:50px;"
+               placeholder="충전할 포인트 입력" onkeyup="formatCurrency(this)">
+        <button id="rechargeButton" style="font-size: 12px;">충전</button>
+        <br>
+    </div>
+
+    <!-- 결과 표시를 위한 엘리먼트 -->
+    <div id="result"></div>
+
+    <!-- HTML 태그에 삽입 -->
+    <div id="userNo" data-th-text="${session.loginUser.no}" style="display: none;"></div>
+    <div id="userPoint" data-th-text="${session.loginUser.point}" style="display: none;"></div>
+
+</div><!-- /card-container -->
+
+<div class="container" style="width: 60%;">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-12">  <!-- 환전, 입찰 내역 container 크기 수정-->
             <!-- Nav tabs category -->
             <ul class="nav nav-tabs faq-cat-tabs">
                 <li class="active"><a href="#faq-cat-1" data-toggle="tab">환전 내역</a></li>
@@ -89,39 +102,34 @@
                         <div class="panel panel-default panel-faq">
                             <div class="panel-heading">
                                 <a data-toggle="collapse" data-parent="#accordion-cat-1" href="#faq-cat-1-sub-1">
-                                    <h4 class="panel-title">
-                                        환전 목록
+                                    <h4 class="panel-title" style="background-color:white;">
+                                        &nbsp;
                                         <span class="pull-right"><i class="glyphicon glyphicon-plus"></i></span>
                                     </h4>
                                 </a>
                             </div>
                             <div id="faq-cat-1-sub-1" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    <table>
+                                    <div style="text-align: center;">
+                                        <a th:href="@{/exchange/form}" class="request-button" style="background-color: #D8D8D8; border-radius: 20px; font-size:10px;">환전 요청</a>
+                                    </div>
+                                    <table id="exchangeTable" style="display: none;"> <!-- id와 스타일 추가 -->
                                         <thead>
                                         <tr>
                                             <th>번호</th>
-                                            <th>제목</th>
-                                            <th>작성일</th> <!-- 작성일 열을 먼저 배치 -->
-                                            <th>작성자</th> <!-- 작성자 열을 그 다음에 배치 -->
+                                            <th>예금주</th>
+                                            <th>은행</th>
+                                            <th>계좌번호</th>
+                                            <th>환전 금액</th>
+                                            <th>작성일</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        <tr th:each="exchange : ${list}">
-                                            <td th:text="${exchange.no}">100</td>
-                                            <td>
-                                                <a th:href="@{/exchange/detail/{exchangeNo}(exchangeNo=${exchange.no})}"
-                                                   th:text="${exchange.title} ?: '제목없음'">홍길동님 환전요청</a>
-                                                <!-- 본인의 글이 아닐 경우에만 자물쇠 아이콘을 출력 -->
-                                                <span th:if="${exchange.user.no != currentUserId}">&#x1F512;</span>
-                                            </td>
-                                            <td th:text="${#dates.format(exchange.createdDate, 'yyyy-MM-dd')}">2021-09-14</td>
-                                            <td th:text="${exchange.user.name}">홍길동</td>
-                                        </tr>
+                                        <tbody id="exchangeList">
                                         </tbody>
                                     </table>
-                                    <a th:href="@{/exchange/form}" class="request-button">환전 요청</a>
+
                                 </div>
+                                <script src="/js/exchangeAPI.js"></script>
                             </div>
                         </div>
                         <div class="panel panel-default panel-faq">
@@ -138,22 +146,28 @@
                         <div class="panel panel-default panel-faq">
                             <div class="panel-heading">
                                 <a data-toggle="collapse" data-parent="#accordion-cat-2" href="#faq-cat-2-sub-1">
-                                    <h4 class="panel-title">
-                                        입찰 목록
+                                    <h4 class="panel-title" style="background-color:white;">
+                                        &nbsp;
                                         <span class="pull-right"><i class="glyphicon glyphicon-plus"></i></span>
                                     </h4>
                                 </a>
                             </div>
                             <div id="faq-cat-2-sub-1" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-default panel-faq">
-                            <div id="faq-cat-2-sub-2" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    <!-- "입찰 내역" 불러오기 -->
+                                    <table class="table table-bordered table-striped" style="display: none;" id="bidTable">
+                                        <thead>
+                                        <tr>
+                                            <th>번호</th>
+                                            <th>작품명</th>
+                                            <th>가격</th>
+                                            <th>입찰 여부</th>
+                                            <th>입찰일</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="bidListBody">
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -163,8 +177,12 @@
         </div>
     </div>
 </div>
-
-
 <script src="/js/chargeScript.js"></script>
+<script src="/js/historyAPI.js" defer></script>
+
+
+<div data-th-replace="footer :: footer"></div>
+
+
 </body>
 </html>

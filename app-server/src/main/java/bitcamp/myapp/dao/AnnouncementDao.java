@@ -23,3 +23,4 @@ public interface AnnouncementDao {
 
   int setAnnouncementFixed(@Param("announcementNo") int announcementNo, @Param("fixed") int fixed);
 }
+

@@ -3,11 +3,14 @@ package bitcamp.myapp.vo;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Objects;
 
 public class Article implements Serializable {
   private static final long serialVersionUID = 1L;
+  private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 
   private int articleNo;
   private User writer;
@@ -19,6 +22,8 @@ public class Article implements Serializable {
   private String photo;
   private Timestamp startDate;
   private Timestamp endDate;
+  private String startDateStr;
+  private String endDateStr;
   private long remainTime;
   private Status status;
   private int curPrice;
@@ -144,6 +149,28 @@ public class Article implements Serializable {
 
   public void setEndDate(Timestamp endDate) {
     this.endDate = endDate;
+  }
+
+  public void setStartDateStr(String startDateStr) {
+    this.startDateStr = startDateStr;
+  }
+
+  public void setEndDateStr(String endDateStr) {
+    this.endDateStr = endDateStr;
+  }
+
+  public String getStartDateStr() {
+    if (startDate != null) {
+      return sdf.format(startDate);
+    }
+    return null;
+  }
+
+  public String getEndDateStr() {
+    if (endDate != null) {
+      return sdf.format(endDate);
+    }
+    return null;
   }
 
   public long getRemainTime() {

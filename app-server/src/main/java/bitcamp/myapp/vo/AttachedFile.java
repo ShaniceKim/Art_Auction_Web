@@ -50,3 +50,4 @@ public class AttachedFile implements Serializable {
     this.articleNo = articleNo;
   }
 }
+

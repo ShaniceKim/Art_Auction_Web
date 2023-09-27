@@ -9,6 +9,7 @@ import java.util.List;
 public interface ExchangeDao {
   int insert(Exchange exchange);
   List<Exchange> findAll();
+  List<Exchange> findByUserNo(int userNo) throws Exception;
   Exchange findBy(int no);
   int update(Exchange exchange);
   int delete(int no);

@@ -1,6 +1,7 @@
 let currentUserId;  // Declare currentUserId at top level, so that it can be set from the HTML page.
 
-document.getElementById('fetchData').addEventListener('click', function() {
+// 환전 내역 함수 정의
+function fetchExchangeData() {
     fetch('/exchange/listUserExchanges')
         .then(response => response.json())
         .then(data => {
@@ -28,4 +29,7 @@ document.getElementById('fetchData').addEventListener('click', function() {
         .catch(error => {
             console.error('Error:', error);
         });
-});
+}
+
+document.querySelector('a[href="#faq-cat-1"]').addEventListener('click', fetchExchangeData);
+document.querySelector('a[data-parent="#accordion-cat-1"]').addEventListener('click', fetchExchangeData);

@@ -1,5 +1,6 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.App;
 import bitcamp.myapp.service.UserService;
 import bitcamp.myapp.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,6 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
-
-  {
-    System.out.println("AuthController 생성됨!");
-  }
 
   @Autowired
   UserService userService;
@@ -55,13 +52,19 @@ public class AuthController {
       throw new Exception("회원 정보가 일치하지 않습니다.");
     }
 
+    // 중복로그인시, 이전 로그인사람대신 현재로그인 사람기준으로 바꿈
+    if (!App.loginHandler.getSessionId(loginUser.getEmail()).isEmpty()) {
+      App.loginHandler.removeUser(App.loginHandler.getSessionId(loginUser.getEmail()));
+    }
+    App.loginHandler.addUser(session.getId(),loginUser);
+    System.out.println("------------------" + loginUser);
     session.setAttribute("loginUser", loginUser);
     return "redirect:/";
   }
 
   @GetMapping("logout")
-  public String logout(HttpSession session) throws Exception {
-    session.invalidate();
+  public String logout(HttpSession session, Model model) throws Exception {
+    App.loginHandler.removeUser(session.getId());
     return "redirect:/";
   }
 }

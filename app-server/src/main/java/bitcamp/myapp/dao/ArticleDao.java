@@ -27,7 +27,7 @@ public interface ArticleDao {
 
   int updateArticleBidNum(int articleNo);
 
-
+  int returnPoint(int articleNo);
 
   int bid(Article article);
 
@@ -35,5 +35,5 @@ public interface ArticleDao {
 
   void updateArticleStatus(@Param("articleNo") int articleNo);
 
-  void updateArticleBidPoint(@Param("articleNo") int articleNo, @Param("bidAmount") int bidAmount);
+  void updateArticleBidPoint(@Param("articleNo") int articleNo, @Param("bidAmount") int bidAmount, @Param("curBidder") int userNo);
 }

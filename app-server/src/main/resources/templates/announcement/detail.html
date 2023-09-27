@@ -1,12 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset='UTF-8'>
-    <title>BitGallery</title>
-
     <style>
+       div#detail-content-scroll {
+           width: 400px;
+           height: 500px;
+           overflow: auto; /* Enable scrolling */
+           overflow-x: hidden;
+           word-break:break-all;
+           white-space: pre-wrap;
+       }
 
-        /* 전체 스타일 */
+       div#detail-content-scroll::-webkit-scrollbar {
+           width: 10px; /* Set the width of the scrollbar */
+       }
+
+       div#detail-content-scroll::-webkit-scrollbar-track {
+           background-color: #f1f1f1; /* Set the background color of the scrollbar track */
+       }
+
+       div#detail-content-scroll::-webkit-scrollbar-thumb {
+           background-color: #888; /* Set the color of the scrollbar thumb */
+           border-radius: 5px; /* Round the edges of the scrollbar thumb */
+       }
+
+         /* 전체 스타일 */
         body {
             margin: 0;
             padding: 0;
@@ -16,9 +34,14 @@
         color: #000;
         text-decoration: none;
         text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
+        display: block; /* 블록 요소로 설정하여 가운데 정렬을 적용 */
+        width: max-content; /* 최대 너비를 텍스트 길이에 맞게 설정 */
+        margin: 0 auto; /* 가운데 정렬을 위한 스타일 */
+        text-align: center; /* 텍스트를 가운데 정렬 */
+        text-decoration: none; /* 기본 텍스트 밑줄 제거 */
+        font-size: 12px;
+        font-weight: normal;
         }
-
-
 
         /* 헤더 스타일 수정 */
         .header {
@@ -63,81 +86,113 @@ table {
     border-spacing: 0; /* 테두리 간격을 0으로 설정 */
     border: none; /* 테두리 없애기 */
     border-radius: 20px; /* 표 전체에 둥글게 설정 */
-    max-width: 100%; /* 표의 최대 너비를 80%로 설정 */
+    max-width: 90%; /* 표의 최대 너비를 60%로 설정 (원하는 크기로 조절) */
     margin: 0 auto; /* 가운데 정렬을 위해 추가 */
 }
 
-th, td {
-    border: 1px solid #ddd; /* 셀 테두리 한 줄로 설정 */
-    padding: 7px;
-    text-align: center;
-    letter-spacing: 1.5px;
+        th, td {
+            border: 1px solid #ddd;
+            padding: 7px;
+            text-align: center;
+            letter-spacing: 1.5px;
+            font-size: 13px;
 
-}
-
-th {
-    text-shadow: 2px 2px 4px rgba(128, 128, 128, 0.5); /* 형광펜 효과 추가 */
-}
-
-img {
-    max-width: 160px;
-    max-height: 120px;
-}
-
-        form {
-            width: 40%;
-            margin: 210px auto;
-            padding: 20px;
-            border: 4px solid #D8D8D8;
-            border-radius: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
+        th {
+            text-shadow: 2px 2px 4px rgba(128, 128, 128, 0.5); /* 형광펜 효과 추가 */
+            font-size: 12px; font-weight: normal; text-align: center;
+        }
+
+        img {
+            max-width: 160px;
+            max-height: 120px;
+        }
+
+        form {
+        width: 900px;
+        height: 800px;
+        margin: 0 auto; /* 중앙 정렬 */
+        margin-top: 40px;
+        margin-bottom: 40px;
+        padding-top: 2px;
+        padding-right: 2px;
+        padding-bottom: 2px;
+        padding-left: 2px;
+        border: 4px solid #D8D8D8;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     </style>
+    <meta charset='UTF-8'>
+    <title>BitGallery</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"
+            integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
 </head>
 <body>
 
 <div data-th-replace="header :: header"></div>
-<div style="display: flex; justify-content: center; align-items: center; padding: 10px; min-height: calc(100vh - 130px);">
-<form data-th-action="@{/announcement/update}" method='post' enctype='multipart/form-data' style="margin:10px;">
 
-<h2 style="text-align: center; font-weight: 320; letter-spacing: 2px;">공지사항 수정</h2>
-
-    <table border='1'>
-        <tr><th style='width:120px; font-size: 12px; font-weight: normal; text-align: center;'>번호</th>
-            <td style='width:300px;'><input type='text' name='no' value="100" data-th-value="${announcement.no}" readonly></td></tr>
-        <tr><th style="font-size: 12px; font-weight: normal; text-align: center;">제목</th>
-            <td><input type='text' name='title' value="제목입니다." data-th-value="${announcement.title}"></td></tr>
-        <tr><th style="font-size: 12px; font-weight: normal; text-align: center;">작성자</th> <td data-th-text="${announcement.writer.name}">홍길동</td></tr>
-        <tr><th style="font-size: 12px; font-weight: normal; text-align: center;">등록일</th> <td data-th-text="${#dates.format(announcement.createdDate, 'yyyy-MM-dd')}">2023-09-14</td></tr>
-        <tr><th style="font-size: 12px; font-weight: normal; text-align: center;">내용</th>
-            <td><textarea name='content' style='height:200px; width:400px;' data-th-text="${announcement.content}">내용입니다!</textarea></td></tr>
-
-        <tr><th style="font-size: 12px; font-weight: normal; text-align: center;">첨부파일</th><td>
-            <div data-th-each="file : ${announcement.announcementAttachedFiles}">
-                <a data-th-href="|https://kr.object.ncloudstorage.com/bitgallery/announcement/${file.filePath}|"
-                   data-th-text="${file.filePath}">okok.gif</a>
-                <a data-th-href="@{/announcement/fileDelete(no=${file.no},currentPage=${currentPage})}">삭제</a><br>
-            </div>
-            <input type='file' name='files' multiple>
-        </td></tr>
-    </table>
-
-    <div>
-        <input type='hidden' name='currentPage' data-th-value=${currentPage}>
-        <button>변경</button>
-        <button type='reset'>초기화</button>
-        <a data-th-href="@{/announcement/delete(no=${announcement.no},currentPage=${currentPage})}">삭제</a>
-        <a data-th-href="@{/announcement/list(currentPage=${currentPage})}">목록</a>
-    </div>
-</form>
-</div>
 <p data-th-unless="${announcement}">해당 번호의 게시글이 없습니다!</p>
-<!--<form data-th-if="${announcement}" data-th-action="@{/announcement/update}" method='post' enctype='multipart/form-data'>-->
 
+<form>
+<br>
+    <h2 style="text-align: center; font-weight: 320; letter-spacing: 2px;">공지사항</h2>
+
+    <th:block th:unless="${#strings.equals(authority, 'ADMIN')}">
+        <div style="display: flex; justify-content: center;">
+            <a style="text-decoration-line: none; font-size: 12px; font-weight: normal; text-align: center; display: inline-block; margin-left: 5px;" id="userToList" onclick="userToList()">목록</a>
+        </div>
+        <script>
+            function userToList() {
+                var currentPage = [[${currentPage}]]
+                location.href="http://" + window.location.host + "/announcement/list?currentPage=" + currentPage;
+            }
+        </script>
+    </th:block>
+
+    <th:block th:if="${#strings.equals(authority, 'ADMIN')}" >
+        <div style="display: flex; justify-content: center;">
+            <a style="text-decoration-line: none; font-size: 12px; font-weight: normal; text-align: center; display: inline-block; margin-right: 5px;" id="editButton" onclick="moveUpdate()">변경</a>
+            <a style="text-decoration-line: none; font-size: 12px; font-weight: normal; text-align: center; display: inline-block; margin-left: 5px; margin-right: 5px;" data-th-href="@{/announcement/delete(no=${announcement.no},currentPage=${currentPage})}">삭제</a>
+            <a style="text-decoration-line: none; font-size: 12px; font-weight: normal; text-align: center; display: inline-block; margin-left: 5px;" id="adminToList" onclick="adminToList()">목록</a>
+        </div>
+        <script>
+            function moveUpdate() {
+               var currentPage = [[${currentPage}]]
+               var announcementNo = [[${announcement.no}]]
+               location.href="http://" + window.location.host + "/announcement/update?currentPage=" + currentPage + "&no=" + announcementNo;
+            }
+
+            function adminToList() {
+                var currentPage = [[${currentPage}]]
+                location.href="http://" + window.location.host + "/announcement/list?currentPage=" + currentPage;
+            }
+        </script>
+    </th:block>
+    <br>
+
+<th:block th:if="${announcement}">
+    <table border='1'>
+        <tr><th style='width:100px; height: 30px'>번호</th><td style='width:600px;'><div data-th-text="${announcement.no}"></div></td></tr>
+        <tr><th style='width:100px; height: 30px'>제목</th><td><div data-th-text="${announcement.title}" style="width: 600px;" ></div></td></tr>
+        <tr><th>내용</th><td><div data-th-text="${announcement.content}" id="detail-content-scroll" style="width: 600px; height: 400px;"></div></td></tr>
+        <tr><th style='width:100px; height: 30px'>작성자</th><td data-th-text="${announcement.writer.name}">홍길동</td></tr>
+        <tr><th style='width:100px; height: 30px'>등록일</th><td data-th-text="${#dates.format(announcement.createdDate, 'yyyy-MM-dd')}">2023-09-14</td></tr>
+        <tr><th style='width:100px; height: 30px'>첨부파일</th><td><div data-th-each="file : ${announcement.announcementAttachedFiles}"><a data-th-href="|https://kr.object.ncloudstorage.com/bitgallery/announcement/${file.filePath}|" data-th-text="${file.filePath}">okok.gif</a></div></td></tr>
+    </table>
+</th:block>
+
+</form>
+
+<div>
+        <input type='hidden' name='currentPage' data-th-value=${currentPage}>
+    </div>
 <div data-th-replace="footer :: footer"></div>
-
 </body>
 </html>

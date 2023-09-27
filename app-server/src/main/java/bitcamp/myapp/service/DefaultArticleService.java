@@ -1,7 +1,6 @@
 package bitcamp.myapp.service;
 
 import bitcamp.myapp.dao.ArticleDao;
-import bitcamp.myapp.vo.Announcement;
 import bitcamp.myapp.vo.Article;
 import bitcamp.myapp.vo.Status;
 import org.springframework.stereotype.Service;
@@ -22,6 +21,14 @@ public class DefaultArticleService implements ArticleService {
   @Transactional
   @Override
   public int add(Article article) throws Exception {
+
+    if (article.getTitle().isEmpty()) {
+      return 2;
+    } else if (article.getArtist().isEmpty()) {
+      return 3;
+    } else if (article.getPhoto() == null) {
+      return 4;
+    }
     return articleDao.insert(article);
   }
 
@@ -36,14 +43,16 @@ public class DefaultArticleService implements ArticleService {
       }
       List<Article> list = articleDao.findAll(status);
       int size = list.size();
-      int pageSize = 10;
+      int pageSize = 4;
       int startPage = (currentPage - 1) * pageSize ;
       int endPage = Math.min(pageSize, size - startPage);
       List<Article> subList = list.stream().skip(startPage).limit(endPage).toList();
 
-      model.addAttribute("pageSize", size);
+      model.addAttribute("pageSize", pageSize);
+      model.addAttribute("size", size);
       model.addAttribute("list", subList);
       model.addAttribute("currentPage", currentPage);
+      model.addAttribute("actualSize", Math.ceil((double)size / (double)pageSize));
       model.addAttribute("status", status.name());
       model.addAttribute("path", 0);
     } catch (Exception e) {
@@ -62,7 +71,7 @@ public class DefaultArticleService implements ArticleService {
       }
       List<Article> list = articleDao.findByArtist(artist);
       int size = list.size();
-      int pageSize = 10;
+      int pageSize = 4;
       int startPage = (currentPage - 1) * pageSize ;
       int endPage = Math.min(pageSize, size - startPage);
       List<Article> subList = list.stream().skip(startPage).limit(endPage).toList();
@@ -70,6 +79,7 @@ public class DefaultArticleService implements ArticleService {
       model.addAttribute("pageSize", size);
       model.addAttribute("list", subList);
       model.addAttribute("currentPage", currentPage);
+      model.addAttribute("actualSize", Math.ceil((double)size / (double)pageSize));
       model.addAttribute("artist", artist);
       model.addAttribute("path", 1);
     } catch (Exception e) {
@@ -77,15 +87,9 @@ public class DefaultArticleService implements ArticleService {
     }
   }
 
-  @Override
   public List<Article> findAuctionArticlesByDate(String date) throws Exception {
-    return null;
+    return articleDao.findAuctionArticlesByDate(date);
   }
-
-//  @Override
-//  public List<Article> findAuctionArticlesByDate(String date) throws Exception {
-//    return ArticleDao.findAuctionArticlesByDate(date);
-//  }
 
   @Override
   public Article get(int articleNo) throws Exception {
@@ -127,8 +131,13 @@ public class DefaultArticleService implements ArticleService {
   }
 
   @Override
-  public void updateArticleBidPoint(int articleNo, int bidAmount) {
-    articleDao.updateArticleBidPoint(articleNo,bidAmount);
+  public void updateArticleBidPoint(int articleNo, int bidAmount, int userNo) {
+    articleDao.updateArticleBidPoint(articleNo,bidAmount, userNo);
+  }
+
+  @Override
+  public void returnPoint(int articleNo) {
+    articleDao.returnPoint(articleNo);
   }
 
   @Override

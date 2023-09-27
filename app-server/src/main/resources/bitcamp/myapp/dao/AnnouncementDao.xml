@@ -10,6 +10,7 @@
     <result column="title"          property="title"/>
     <result column="content"        property="content"/>
     <result column="created_date"   property="createdDate"/>
+    <result column="fixed"   property="fixed"/>
 
     <association property="writer" javaType="user">
       <id     column="user_no"    property="no"/>
@@ -69,6 +70,7 @@
     a.title,
     a.content,
     a.created_date,
+    a.fixed,
     u.user_no,
     u.name,
     f.file_no,

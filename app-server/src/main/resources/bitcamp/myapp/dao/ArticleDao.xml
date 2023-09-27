@@ -105,8 +105,18 @@
     <update id="updateArticleBidPoint" parameterType="map">
         update auction_article set
         cur_price = #{bidAmount}
+        ,cur_bidder = #{curBidder}
         where
         article_no=#{articleNo}
+    </update>
+
+    <update id="returnPoint" parameterType="int">
+        update auction_article A inner join auction_user U
+            on A.cur_bidder=U.user_no
+        set
+            U.point=U.point+A.cur_price
+        where
+            A.article_no=#{articleNo}
     </update>
 
 
@@ -148,7 +158,6 @@
         a.start_date,
         a.end_date,
         a.status,
-        a.cur_price,
         a.end_price,
         a.bid_count,
         u.name

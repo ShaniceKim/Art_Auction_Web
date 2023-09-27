@@ -18,3 +18,4 @@ public interface AnnouncementService {
   AnnouncementAttachedFile getAnnouncementAttachedFile(int fileNo) throws Exception;
   int deleteAttachedFile(int fileNo) throws Exception;
 }
+

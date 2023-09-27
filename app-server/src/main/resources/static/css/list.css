@@ -16,18 +16,27 @@ table {
     border-radius: 5px;
 }
 
+        a {
+            color: #000;
+            text-decoration: none;
+            text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
+            font-weight: 100;
+        }
+
 th, td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
+    font-size:10px;
 }
 
 /* 버튼 스타일 */
 .request-button-container {
     display: flex;
-    justify-content: flex-end;
-    width: 60%;
-    padding-top: 20px;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center;
+    width: 100%; /* 가로 폭을 100%로 설정하여 테이블 너비에 맞춥니다. */
+    margin-top: 20px; /* 테이블 위 여백을 조절합니다. */
 }
 .request-button {
     padding: 10px 20px;
@@ -52,4 +61,42 @@ th, td {
     justify-content: center;
     min-height: 100vh;
     background-color: #ffffff;
+}
+
+/* 입찰 내역 테이블 스타일 */
+#bidTable {
+    width: 60%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+#bidTable th, #bidTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* 환전 내역과 동일한 버튼 스타일 */
+.request-button-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 60%;
+    padding-top: 20px;
+}
+.request-button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+.request-button:hover {
+    background-color: #0056b3;
 }

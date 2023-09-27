@@ -12,17 +12,23 @@ $(document).ready(function() {
             const clickedDate = date.format();
             $.get("/article/getEvent", { date: clickedDate }, function(data) {
                 let eventDetailHtml = '';
+
                 data.forEach(article => {
                     let formattedStartDate = formatDate(article.startDateStr);
                     let formattedEndDate = formatDate(article.endDateStr);
                     eventDetailHtml += `
-                        <div>
-                            <strong>Title:</strong> ${article.title}
-                            <br>
-                            <strong>Start Date:</strong> ${formattedStartDate}
-                            <br>
-                            <strong>End Date:</strong> ${formattedEndDate}
-                            <br><br>
+
+
+                        <div class="auction-box">
+                            <div class="auction-title">
+                                ${article.title}
+                            </div>
+                            <div class="auction-date">
+                                <strong>Start Date:</strong> ${formattedStartDate}
+                            </div>
+                            <div class="auction-date">
+                                <strong>End Date:</strong> ${formattedEndDate}
+                            </div>
                         </div>
                     `;
                 });

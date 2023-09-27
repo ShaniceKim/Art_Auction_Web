@@ -3,6 +3,21 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
 <head>
+    <script language="Javascript">
+        <!--
+        function setCookie( name, value, expiredays ) {
+            var todayDate = new Date();
+                todayDate.setDate( todayDate.getDate() + expiredays );
+                document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + todayDate.toGMTString() + ";"
+            }
+        function closeWin() {
+            if ( document.notice_form.chkbox.checked ){
+                setCookie( "maindiv", "done" , 1 );
+            }
+            document.all['divpop'].style.visibility = "hidden";
+        }
+        //-->
+    </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BitGallery</title>
@@ -11,7 +26,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
-
 
     <!-- Favicons -->
     <link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
@@ -39,59 +53,127 @@
     <![endif]-->
 
     <style>
+
+        strong {
+            display: block; /* <strong> 요소를 블록 레벨 요소로 설정 */
+            text-align: center; /* 가로 방향 가운데 정렬 */
+            }
+
+        #eventBox {
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+
+        .auction-box {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            margin: 0;
+            border-radius: 5px;
+            text-align: center;
+            box-sizing: border-box;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+         }
+
+        div.auction-title {
+            font-weight: bold;
+            font-size: 20px;
+            text-align: center;
+            color: gray;
+        }
+
+        .auction-date {
+            font-size: 14px;
+            text-align: center;
+        }
+
+        div#eventBox {
+            width: 400px;
+            height: 500px;
+            overflow: auto; /* 스크롤 가능하게 설정 */
+            overflow-x: hidden;
+            word-break: break-all;
+            white-space: pre-wrap;
+            text-align: center; /* 가로 방향 가운데 정렬 */
+        }
+
+
+       div#eventBox::-webkit-scrollbar {
+           width: 10px; /* Set the width of the scrollbar */
+           text-align: center;
+       }
+
+       div#eventBox::-webkit-scrollbar-track {
+           background-color: #f1f1f1; /* Set the background color of the scrollbar track */
+           text-align: center;
+       }
+
+       div#eventBox::-webkit-scrollbar-thumb {
+           background-color: #888; /* Set the color of the scrollbar thumb */
+           border-radius: 5px; /* Round the edges of the scrollbar thumb */
+           text-align: center;
+       }
+
         .fc-day-number {
-          color: black; /* 검정색으로 변경할 색상을 지정하세요. */
+            color: black; /* 검정색으로 변경할 색상을 지정하세요. */
+
         }
 
         .btn-circle {
-	width:50px;
-	height:50px;
-	margin-top:15px;
-	line-height:40px;
-	text-align:center;
-	border:2px solid #fff;
-	border-radius:100%!important;
-	font-size:20px;
-	color:#fff;
-	background:0 0;
-	-webkit-transition:background .3s ease-in-out;
-	-moz-transition:background .3s ease-in-out;
-	transition:background .3s ease-in-out;
-}
-.btn-circle:hover,.btn-circle:focus {
-	outline:0;
-	color:#fff;
-	background:rgba(255,255,255,.1);
-}
-.btn-circle i.animated {
-	-webkit-transition-property:-webkit-transform;
-	-webkit-transition-duration:1s;
-	-moz-transition-property:-moz-transform;
-	-moz-transition-duration:1s;
-}
-.btn-circle:hover i.animated {
-	-webkit-animation-name:pulse;
-	-moz-animation-name:pulse;
-	-webkit-animation-duration:1.5s;
-	-moz-animation-duration:1.5s;
-	-webkit-animation-iteration-count:infinite;
-	-moz-animation-iteration-count:infinite;
-	-webkit-animation-timing-function:linear;
-	-moz-animation-timing-function:linear;
-}
+            width:50px;
+            height:50px;
+            margin-top:15px;
+            line-height:40px;
+            text-align:center;
+            border:2px solid #fff;
+            border-radius:100%!important;
+            font-size:20px;
+            color:#fff;
+            background:0 0;
+            -webkit-transition:background .3s ease-in-out;
+            -moz-transition:background .3s ease-in-out;
+            transition:background .3s ease-in-out;
+        }
+        .btn-circle:hover,.btn-circle:focus {
+            outline:0;
+            color:#fff;
+            background:rgba(255,255,255,.1);
+        }
+        .btn-circle i.animated {
+            -webkit-transition-property:-webkit-transform;
+            -webkit-transition-duration:1s;
+            -moz-transition-property:-moz-transform;
+            -moz-transition-duration:1s;
+        }
+        .btn-circle:hover i.animated {
+            -webkit-animation-name:pulse;
+            -moz-animation-name:pulse;
+            -webkit-animation-duration:1.5s;
+            -moz-animation-duration:1.5s;
+            -webkit-animation-iteration-count:infinite;
+            -moz-animation-iteration-count:infinite;
+            -webkit-animation-timing-function:linear;
+            -moz-animation-timing-function:linear;
+        }
     </style>
 
     <script>
 
         document.addEventListener("DOMContentLoaded", function() {
-        const scrollToContactButton = document.getElementById("scrollToContact");
-        scrollToContactButton.addEventListener("click", function() {
-            // Contact 섹션으로 스크롤
-        document.querySelector("#contact").scrollIntoView({
-        behavior: "smooth"
-    });
-  });
-});
+            const scrollToContactButton = document.getElementById("scrollToContact");
+            scrollToContactButton.addEventListener("click", function() {
+                // Contact 섹션으로 스크롤
+                document.querySelector("#contact").scrollIntoView({
+                    behavior: "smooth"
+                });
+            });
+        });
 
     </script>
 
@@ -160,12 +242,31 @@
                         <div style="margin-top: 40px;"></div>
 
                         <div style="display: flex; justify-content: center; align-items: center;">
-                            <input type="text" class="form-control" placeholder="작가명을 입력하세요."
-                                   style="border-radius: 20px; width: 50%; margin-right: 5px; text-align: center;">
-                            <button class="btn btn-custom" type="button"
+                            <input type="text" class="form-control" placeholder="작가명을 입력하세요." id="artist"
+                                   style="border-radius: 20px; width: 50%; margin-right: 5px; text-align: center;"
+                                   onkeydown="if (event.keyCode === 13) search();">
+                            <button class="btn btn-custom" type="button" data-th-onclick='search()'
                                     style="height: 34px; border-radius: 20px; width: 15%; display: flex; justify-content: center; align-items: center;">
                                 <span th:text="'search'" style="font-size: 14px; text-transform: lowercase;"></span>
                             </button>
+
+                            <script th:inline="javascript">
+                                /*<![CDATA[*/
+                                function search() {
+                                    const artist = document.getElementById('artist').value;
+
+                                    location.href='article/list?currentPage=1&path=1&artist=' + artist;
+                                }
+                                /*<![CDATA[*/
+
+
+                                function search() {
+                                    const artist = document.getElementById('artist').value;
+                                    location.href = 'article/list?currentPage=1&path=1&artist=' + artist;
+                                }
+
+                            </script>
+
                         </div>
                         <br>
                         <br>
@@ -187,15 +288,14 @@
 <!-- Contact Section -->
 <div id="contact" class="text-center">
     <!--style="background-image: url('img/secondPG.jpg'); background-size: cover;-->
-    <div class="container">
+    <div class="container" style="text-align: center;">
 
         <div style="display: flex; justify-content: center; align-items: center; height: 60vh; gap: 15px;">
             <div id="calendar" style="flex: 1; margin-right : 20px; width: 500px; height: 500px; max-width: 500px; border-radius: 20px; background-color: #fff; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); padding: 20px;">
             </div>
 
             <div id="eventBox"
-                 style="flex: 1; max-width: 500px; width: 500px; height: 500px; border-radius: 20px; background-color: #f5f5f5; border: 1px solid black; padding: 80px; box-sizing: border-box; color: black;">
-                여기에 미술품 경매 날짜 정보 넣기
+                 style="text-align: center; flex: 1; max-width: 500px; width: 500px; height: 500px; border-radius: 20px; background-color: #f5f5f5; border: 1px solid black; padding: 80px; box-sizing: border-box; color: black;">
             </div>
         </div>
     </div>
@@ -204,11 +304,11 @@
 <!-- Footer Section -->
 <div id="footer" th:fragment="footer">
     <footer class="container text-center">
-        <p>Shared by <i class="fa fa-love"></i><a href="https://ncamp.kr/">비트캠프 + 매직에꼴 + 네이버클라우드@2023</a></p>
+        <p><i class="fa fa-love"></i><a href="https://ncamp.kr/">BITGALLERY@2023</a></p>
     </footer>
 </div>
 
-<!-- JavaScript Libraries -->
+<!— JavaScript Libraries —>
 
 <script th:src="@{/js/calendar.js}"></script>
 <script th:src="@{/js/bootstrap.js}"></script>
@@ -219,3 +319,41 @@
 <script th:src="@{/js/main.js}"></script>
 </body>
 </html>
+
+</script>
+
+<!-- POPUP -->
+<div id="divpop" style="position:absolute;left:395px;top:190px;z-index:200;visibility:hidden;">
+    <table width=500 height=600 cellpadding=4 cellspacing=0>
+        <tr>
+            <td style="border:1px #666666 solid" height=580 align=center bgcolor=white>
+                <img src="/img/popup.png" alt="announcement-popup" style="cursor: pointer;"
+                     id="popup" onclick="popup()">
+            </td>
+            <script>
+                function popup() {
+                var currentPage = 1
+                console.log(currentPage)
+                location.href="http://" + window.location.host + "/announcement/list?currentPage=1";
+                }
+            </script>
+        </tr>
+        <tr>
+            <form name="notice_form">
+                <td align=right bgcolor=white>
+                    <input type="checkbox" name="chkbox" value="checkbox">오늘 하루 이 창을 열지 않음
+                    &nbsp<a href="javascript:closeWin();"><B>[닫기]</B></a>
+                </td>
+        </tr>
+        </form>
+    </table>
+</div>
+<script language="Javascript">
+    cookiedata = document.cookie;
+    if ( cookiedata.indexOf("maindiv=done") < 0 ){
+        document.all['divpop'].style.visibility = "visible";
+        }
+        else {
+            document.all['divpop'].style.visibility = "hidden";
+    }
+</script>

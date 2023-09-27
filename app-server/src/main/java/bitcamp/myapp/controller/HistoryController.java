@@ -1,6 +1,7 @@
 package bitcamp.myapp.controller;
 
 
+import bitcamp.myapp.App;
 import bitcamp.myapp.service.AnnouncementService;
 import bitcamp.myapp.service.HistoryService;
 import bitcamp.myapp.vo.Article;
@@ -33,7 +34,7 @@ public class HistoryController {
             //MultipartFile photofile, // 파일 업로드 파라미터로 지정
             HttpSession session) throws Exception {
 
-        User loginUser = (User) session.getAttribute("loginUser");
+        User loginUser = App.loginHandler.getUser(session.getId());
         if (loginUser == null) {
             return "redirect:/auth/form";
         }
@@ -46,7 +47,7 @@ public class HistoryController {
     @GetMapping("api/bidList")
     @ResponseBody
     public ResponseEntity<Object> bidListAPI(HttpSession session) throws Exception {
-        User loginUser = (User) session.getAttribute("loginUser");
+        User loginUser = App.loginHandler.getUser(session.getId());
 
         if (loginUser == null) {
             // 로그인하지 않은 사용자에게 응답

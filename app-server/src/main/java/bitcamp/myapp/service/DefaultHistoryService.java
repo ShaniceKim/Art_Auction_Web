@@ -9,6 +9,7 @@ import java.util.List;
 @Service
 public class DefaultHistoryService implements HistoryService{
 
+
   HistoryDao historyDao;
 
   public DefaultHistoryService(HistoryDao historyDao) {

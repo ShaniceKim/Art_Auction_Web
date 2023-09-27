@@ -1,102 +1,191 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset='UTF-8'>
-    <title>비트캠프</title>
+  <style>
+    /* 기존 스타일 유지 */
+    label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+    }
 
-    <style>
+            /* 헤더 스타일 수정 */
+        .header {
+            background-color: #D8D8D8;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px; /* 헤더의 높이를 80px로 고정 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
 
-        /* 수정된 스타일 */
-   body {
-       font-family: Arial, sans-serif;
-   }
+        /* 푸터 스타일 수정 */
+        .footer {
+            background-color: #D8D8D8;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px; /* 푸터의 높이를 50px로 고정 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
 
-        a {
+    /* 수정된 스타일 */
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    a {
         color: #000;
         text-decoration: none;
         text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
-        }
+        font-weight: 300;
+    }
 
-   h1 {
-       text-align: center;
-       margin: 20px 0;
-   }
-   form {
-       width: 40%;
-       margin: 210px auto;
-       padding: 20px;
-       border: 4px solid #D8D8D8;
-       border-radius: 20px;
-       display: flex;
-       flex-direction: column;
-       align-items: center;
-   }
-   label, input, textarea, button {
-       display: block;
-       margin-bottom: 15px;
-   }
-   label {
-       font-weight: bold;
-   }
-   input[type="text"],
-   input[type="file"] {
-       width: 100%;
-       max-width: 300px; /* 최대 너비 설정 */
-       padding: 8px;
-       border: 1px solid #ccc;
-       border-radius: 5px;
-       font-size: 14px;
-   }
-   textarea {
-       width: 100%;
-       max-width: 300px; /* 최대 너비 설정 */
-       height: 100px; /* 높이 조정 */
-       padding: 8px;
-       border: 1px solid #ccc;
-       border-radius: 5px;
-       font-size: 14px;
-   }
-   button {
-       background-color: #D8D8D8;
-       color: white;
-       border: none;
-       padding: 10px 20px;
-       border-radius: 5px;
-       font-size: 14px;
-       cursor: pointer;
-   }
-   .button-container {
-       display: flex; /* 아이템들을 가로로 배치하기 위해 flex 사용 */
-       align-items: center; /* 수직 중앙 정렬 */
-   }
-   button {
-       margin-right: 10px; /* 등록 버튼과 상단 고정 버튼 사이의 간격 조절 */
-   }
-   label {
-       margin-left: 10px; /* 등록 버튼과 상단 고정 버튼 사이의 간격 조절 */
-   }
-    </style>
+    h1 {
+        text-align: center;
+        margin: 20px 0;
+    }
+    form {
+        width: 40%;
+        margin: 210px auto;
+        padding: 20px;
+        border: 4px solid #D8D8D8;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    label, input, textarea, button {
+        display: block;
+        margin-bottom: 15px;
+    }
+    label {
+        font-weight: bold;
+    }
+    input[type="text"],
+    input[type="file"] {
+        width: 100%;
+        max-width: 300px; /* 최대 너비 설정 */
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+    textarea {
+        width: 100%;
+        max-width: 300px; /* 최대 너비 설정 */
+        height: 100px; /* 높이 조정 */
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+    button {
+        background-color: #D8D8D8;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    .button-container {
+        display: flex; /* 아이템들을 가로로 배치하기 위해 flex 사용 */
+        align-items: center; /* 수직 중앙 정렬 */
+    }
+    button {
+        margin-right: 10px; /* 등록 버튼과 상단 고정 버튼 사이의 간격 조절 */
+    }
+    label {
+        margin-left: 10px; /* 등록 버튼과 상단 고정 버튼 사이의 간격 조절 */
+    }
+    mark {
+    background-color:lightblue;
+    color: white;
+    border-radius: 8px;
+    }
+  </style>
 
-    </style>
-
+  <meta charset='UTF-8'>
+  <title>BitGallery</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"
+          integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw==" crossorigin="anonymous"
+          referrerpolicy="no-referrer"></script>
 </head>
 <body>
 
 <div data-th-replace="header :: header"></div>
+
 <div style="display: flex; justify-content: center; align-items: center; padding: 10px; min-height: calc(100vh - 130px);">
-<form data-th-action="@{/article/add(currentPage=${currentPage})}" method='post' enctype='multipart/form-data' style="margin:10px;">
-    <h2 style="text-align: center; font-weight: 320; letter-spacing: 2px;">게시글</h2>
-    <input type='text' name='title' placeholder="제목을 입력하세요." style="margin-bottom: 10px; border-radius: 20px; text-align: center;">
-    <textarea name='content' placeholder="제목을 입력하세요." style="margin-bottom: 10px; border-radius: 20px; text-align: center;"></textarea>
-    <input type='text' name='artist' placeholder="작가명을 입력하세요." style="margin-bottom: 10px; border-radius: 20px; text-align: center;">
-    <input type='file' name='files' multiple style="margin-bottom: 10px; border-radius: 20px; text-align: center; font-size:10px;">
-    <br>
-    <input type='text' name='curPrice' multiple placeholder="시작금액을 입력하세요." style="margin-bottom: 10px; border-radius: 20px; text-align: center;"><br>
-    <input type='text' name='endPrice' multiple placeholder="시작구매가를 입력하세요." style="margin-bottom: 10px; border-radius: 20px; text-align: center;"><br>
-    <button>등록</button>
-</form>
+  <form id="article-form" onsubmit="return false;" style="margin:0.1px;">
+
+    <h3 style="text-align: center; font-weight: 320; letter-spacing: 2px;"><mark>&nbsp;경매 작성&nbsp;</mark></h3>
+
+    <input type='text' name='title' placeholder="제목을 입력하세요."
+           style="margin-bottom: 10px; border-radius: 20px; text-align: center;"><br>
+    <textarea name='content' placeholder="내용을 입력하세요."
+              style="margin-bottom: 10px; border-radius: 20px; text-align: center;"></textarea><br>
+    <input type='text' name='artist' placeholder="작가명을 입력하세요."
+           style="margin-bottom: 10px; border-radius: 20px; text-align: center;"><br>
+    <input type='file' name='photofile' multiple
+           style="margin-bottom: 10px; border-radius: 20px; text-align: center; font-size:10px;"><br>
+    <input type='hidden' name='currentPage' data-th-value=${currentPage}>
+    <h3 style="text-align: center; font-weight: 320; letter-spacing: 2px;"><mark>&nbsp;경매 금액 설정&nbsp;</mark></h3>
+    <input type='text' name='curPrice' placeholder="시작금액을 입력하세요."
+           style="margin-bottom: 10px; border-radius: 20px; text-align: center;"><br>
+    <input type='text' name='endPrice' placeholder="즉시구매가격을 입력하세요."
+           style="margin-bottom: 10px; border-radius: 20px; text-align: center;"><br>
+    <button id="submit-btn" onclick="addArticle();" style="border-radius:20px;">등록</button>
+
+  </form>
 </div>
 <div data-th-replace="footer :: footer"></div>
+
+<script>
+  function addArticle() {
+    var form = $('#article-form')[0]
+    var formData = new FormData(form);
+    $.ajax({
+      url: "/article/add",
+      type: "post",
+      data: formData,
+      processData:false,
+      contentType:false,
+      cache:false,
+      success: (data) => {
+  <!--      console.log(data)-->
+        if (data === "add_commit") {
+           location.href="http://"+window.location.host+"/article/list?currentPage=1&status=expected"
+        } else if (data === "add_no_title") {
+          alert('제목을 입력해주세요.');
+        } else if (data === "add_no_artist") {
+          alert('작가명을 입력해주세요.');
+        } else if (data === "add_no_photo") {
+          alert('사진을 삽입해주세요.');
+        }
+      },
+
+      error: (e) => {
+          console.log("error", e.responseText)
+          if(e.responseText === "NoLogin") {
+    <!--            console.log("noLogin");-->
+              alert('로그인이 되어있지 않습니다.')
+              location.href="http://"+window.location.host+"/auth/form"
+          }
+        location.href="http://"+window.location.host+""
+      }
+    })
+  }
+</script>
 
 </body>
 </html>

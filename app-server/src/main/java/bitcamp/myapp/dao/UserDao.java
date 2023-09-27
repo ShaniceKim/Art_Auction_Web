@@ -10,9 +10,11 @@ import java.util.List;
 public interface UserDao {
   int insert(User user);
   User findBy(int userNo);
+  User findByEmail(String email);
   List<User> findAll();
   User findByEmailAndPassword(@Param("email") String email, @Param("password") String password);
   int update(User user);
+  int editUpdate(User user);
   int updatePoint(User user);
   int delete(int userNo);
 

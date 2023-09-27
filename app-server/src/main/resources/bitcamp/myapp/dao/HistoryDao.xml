@@ -63,5 +63,7 @@
         inner join auction_article A on H.article_no=A.article_no
         where
         H.user_no=#{userNo}
+        order by
+        H.history_no desc
     </select>
 </mapper>

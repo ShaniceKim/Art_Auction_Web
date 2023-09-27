@@ -55,6 +55,23 @@
         e.exchange_no=#{exchangeNo}
     </select>
 
+    <select id="findByUserNo" resultMap="exchangeMap">
+        select
+        e.exchange_no,
+        e.title,
+        e.content,
+        e.created_date,
+        e.exchange_point,
+        u.name,
+        e.user_no
+        from
+        auction_exchange e inner join auction_user u on e.user_no=u.user_no
+        where
+        e.user_no=#{userNo}
+        order by
+        e.exchange_no desc
+    </select>
+
     <update id="update" parameterType="exchange">
         update auction_exchange set
         name=#{name},

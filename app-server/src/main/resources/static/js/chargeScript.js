@@ -32,11 +32,6 @@ document.getElementById('rechargeButton').addEventListener('click', function () 
         return;
     }
 
-    if (rechargeAmount > userPoint) {
-        alert('포인트가 부족합니다.'); // 유효한 포인트를 입력하지 않은 경우 알림
-        return;
-    }
-
     // KG이니시스 창을 열어 포인트를 충전하고, 성공 또는 실패 여부를 처리합니다.
     IMP.init('imp15221536'); // KG이니시스 가맹점 식별코드를 설정
 

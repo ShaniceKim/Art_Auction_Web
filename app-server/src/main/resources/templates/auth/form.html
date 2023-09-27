@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset='UTF-8'>
-<title>비트캠프</title>
+    <meta charset='UTF-8'>
+    <title>비트캠프</title>
+
+    <style>
+        a {
+        color: #000;
+        text-decoration: none;
+        text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
+        }
+    </style>
 </head>
 <body style="margin: 0; padding: 0;">
+<div data-th-replace="header :: header"></div>
 
 
 <div style="display: flex; justify-content: center; align-items: center; height: calc(100vh - 100px); margin-bottom: 50px;">
@@ -14,36 +23,37 @@
         <form action='login' method='post'>
             <table style="border: none; margin: 0 auto;">
                 <tr>
-                    <td><input type="text" name="email" placeholder="이메일을 입력하세요." style="margin-bottom: 10px; border-radius: 20px; text-align: center;"></td>
+                    <td><input type="text" name="email" placeholder="이메일을 입력하세요."
+                               style="margin-bottom: 10px; border-radius: 20px; text-align: center;"></td>
                 </tr>
                 <tr>
-                    <td><input type='password' name='password' placeholder="암호를 입력하세요." style="margin-bottom: 10px; border-radius: 20px; text-align: center;"></td>
+                    <td><input type='password' name='password' placeholder="암호를 입력하세요."
+                               style="margin-bottom: 10px; border-radius: 20px; text-align: center;"></td>
                 </tr>
                 <tr>
                     <td>
                         <label style="font-size: 7px;">
-                            <input type='checkbox' name='saveEmail' data-th-checked="${email}" style="transform: scale(0.7); margin-right: 5px; vertical-align: middle;"> remember me
+                            <input type='checkbox' name='saveEmail' data-th-checked="${email}"
+                                   style="transform: scale(0.7); margin-right: 5px; vertical-align: middle;"> remember
+                            me
                         </label>
                     </td>
                 </tr>
             </table>
             <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
-                <button style="font-size: 14px; background-color: #D8D8D8; border-radius: 20px; border: none; padding: 6px 12px; color: white; cursor: pointer;">LogIn</button>
+                <button style="font-size: 14px; background-color: #D8D8D8; border-radius: 20px; border: none; padding: 6px 12px; color: white; cursor: pointer;">
+                    LogIn
+                </button>
             </div>
         </form>
+        <br>
+        <a data-th-href="@{https://kauth.kakao.com/oauth/authorize?client_id=6884053a11c3626cab670763f77b2bf0&
+redirect_uri=http://localhost/social/kakao&response_type=code}"
+           style="font-size: 12px; font-weight: normal; text-align: right;">
+            <img src="/img/kakao_login_small.png" alt="Kakao Login" style="cursor: pointer;">
+        </a>
     </div>
 </div>
+<div data-th-replace="footer :: footer"></div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-

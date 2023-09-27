@@ -2,41 +2,57 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
 
   <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
   <meta charset="utf-8">
   <link rel="stylesheet" th:href="@{/css/signup.css}">
 
   <title>BitGallery</title>
   <style>
     body {
-        margin: 0;
-        padding: 0;
+      margin: 0;
+      padding: 0;
+    }
+
+    a {
+      color: #000;
+      text-decoration: none;
+      text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
     }
 
     /* 수정된 CSS */
     .form-horizontal {
-        margin-top: 20px;
+      margin-top: 20px;
     }
 
     .header {
-        text-align: center;
-        font-size: 24px;
-        margin-bottom: 20px;
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 20px;
     }
 
     .form-content {
-        background-color: #f7f7f7;
-        padding: 20px;
-        border-radius: 5px;
+      background-color: #f7f7f7;
+      padding: 20px;
+      border-radius: 5px;
     }
 
     .heading {
-        text-align: center;
+      text-align: center;
     }
+
   </style>
+
+
+
 </head>
 
 <body>
@@ -57,39 +73,58 @@
               <h4 class="heading" style="text-align: center;">Your Details</h4>
               <div class="form-group">
                 <div class="col-sm-6">
-                  <label class="control-label" for="exampleInputName2"><i class="fa fa-user"></i></label>
-                  <input class="form-control" id="exampleInputName2" placeholder="Username" type="text">
+                  <label class="control-label" for="email"><i class="fa fa-envelope-o"></i></label>
+                  <input class="form-control" id="email" name="email" placeholder="Email"
+                         type="email">
                 </div>
                 <div class="col-sm-6">
-                  <label class="control-label" for="exampleInputName2"><i class="fa fa-envelope-o"></i></label>
-                  <input class="form-control" id="exampleInputName2" placeholder="Email" type="email">
+                  <label class="control-label" for="password"><i class="fa fa-user"></i></label>
+                  <input class="form-control" id="password" name="password" placeholder="Password"
+                         type="password">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-6">
-                  <label class="control-label" for="exampleInputName2"><i class="fa fa-user"></i></label>
-                  <input class="form-control" id="exampleInputName2" placeholder="Password" type="text">
+                  <label class="control-label" for="name"><i class="fa fa-user"></i></label>
+                  <input class="form-control" id="name" name="name" placeholder="Username"
+                         type="text">
                 </div>
                 <div class="col-sm-6">
-                  <label class="control-label" for="exampleInputName2"><i class="fa fa-envelope-o"></i></label>
-                  <input class="form-control" id="exampleInputName2" placeholder="Phone" type="email">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-12">
-                  <label class="control-label" for="exampleInputName2"><i class="fa fa-lock"></i></label>
-                  <input class="form-control" id="exampleInputName2" placeholder="Address" type="text">
+                  <label class="control-label" for="phone"><i class="fa fa-envelope-o"></i></label>
+                  <input class="form-control" id="phone" name="phone" placeholder="Phone"
+                         type="tel">
                 </div>
               </div>
 
               <div class="form-group">
-                <div class="col-sm-12">
-                  <label class="control-label" for="exampleInputName2"><i class="fa fa-calendar"></i></label>
-                  <textarea class="form-control" placeholder="Additional Message"></textarea>
+                <div class="col-sm-6">
+                  <input class="form-control" onclick="DaumPostcode()" type="text" id="postcode" name="zonecode"
+                         placeholder="우편번호">
+                </div>
+                <!--                <div class="clearfix" style="height: 50px; text-align: right display: flex; align-items: center;">-->
+                <!--                  <span class="child" style="line-height: 50px; font-size: 12px; padding: 5px 10px;" onclick="DaumPostcode()">우편번호 찾기</span>-->
+                <!--                </div>-->
+                <div class="col-sm-6">
+                  <input class="form-control" type="text" id="address" name="address"
+                         placeholder="주소">
                 </div>
               </div>
+
+              <div class="form-group">
+                <div class="col-sm-6">
+                  <input class="form-control" type="text" id="extraAddress" placeholder="참고항목">
+                </div>
+                <div class="col-sm-6">
+                  <input class="form-control" type="text" id="detailAddress" name="detailAddr"
+                         placeholder="상세주소">
+                </div>
+              </div>
+
               <div class="clearfix" style="display: flex; justify-content: center;">
-                <button type="submit" class="btn btn-default" style="border-radius: 20px; width: 70px; height: 40px; font-size: 14px; padding: 5px 10px;">Register</button>
+                <button type="submit" class="btn btn-default"
+                        style="border-radius: 20px; width: 70px; height: 40px; font-size: 14px; padding: 5px 10px;">
+                  Register
+                </button>
               </div>
             </div>
           </form>
@@ -100,6 +135,93 @@
 </div>
 
 <div data-th-replace="footer :: footer"></div>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+  function DaumPostcode() {
+    new daum.Postcode({
+      oncomplete: function(data) {
+        var addr = '';
+        var extraAddr = '';
+
+        if (data.userSelectedType === 'R') {
+          addr = data.roadAddress;
+        } else {
+          addr = data.jibunAddress;
+        }
+
+        if(data.userSelectedType === 'R'){
+          if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+            extraAddr += data.bname;
+          }
+          if(data.buildingName !== '' && data.apartment === 'Y'){
+            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+          }
+          if(extraAddr !== ''){
+            extraAddr = ' (' + extraAddr + ')';
+          }
+          document.getElementById("extraAddress").value = extraAddr;
+
+        } else {
+          document.getElementById("extraAddress").value = '';
+        }
+
+        document.getElementById('postcode').value = data.zonecode;
+        document.getElementById("address").value = addr;
+
+        document.getElementById("detailAddress").focus();
+      }
+    }).open();
+  }
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var autoHypenPhone = function (str) {
+      str = str.replace(/[^0-9]/g, '');
+      var tmp = '';
+
+      if (str.length > 11) {
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3, 4);
+        tmp += '-';
+        tmp += str.substr(7,4);
+        return tmp;
+      }
+
+      if (str.length < 4) {
+        return str;
+      } else if (str.length < 7) {
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3);
+        return tmp;
+      } else if (str.length < 11) {
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3, 3);
+        tmp += '-';
+        tmp += str.substr(6);
+        return tmp;
+      } else {
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3, 4);
+        tmp += '-';
+        tmp += str.substr(7,4);
+        return tmp;
+      }
+      return str;
+    }
+
+    var phone = document.getElementById('phone');
+
+    phone.onkeyup = function () {
+      console.log(this.value);
+      this.value = autoHypenPhone(this.value);
+    }
+  });
+</script>
 
 </body>
 </html>

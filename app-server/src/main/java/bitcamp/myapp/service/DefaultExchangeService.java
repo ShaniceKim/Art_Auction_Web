@@ -9,9 +9,6 @@ import java.util.List;
 
 @Service
 public class DefaultExchangeService implements ExchangeService{
-  {
-    System.out.println("DefaultExchangeService 생성됨!");
-  }
 
   ExchangeDao exchangeDao;
 
@@ -28,6 +25,11 @@ public class DefaultExchangeService implements ExchangeService{
   @Override
   public List<Exchange> list() throws Exception {
     return exchangeDao.findAll();
+  }
+
+  @Override
+  public List<Exchange> listByUserNo(int userNo) throws Exception {
+    return exchangeDao.findByUserNo(userNo);
   }
 
   @Override

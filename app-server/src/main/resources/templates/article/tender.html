@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset='UTF-8'>
-  <title>게시글</title>
+    <meta charset='UTF-8'>
+    <title>게시글</title>
 </head>
 <body>
 
@@ -14,20 +14,20 @@
 
 <form data-th-if="${article}" data-th-action="@{/article/commit/(currentPage=${currentPage})}" method='post'
       enctype='multipart/form-data'>
-  <table border='1'>
+    <table border='1'>
 
-    <tr><th>현재가격</th><td data-th-text="${article.curPrice}">-현재가격-</td></tr>
+        <tr><th>현재가격</th><td data-th-text="${article.curPrice}">-현재가격-</td></tr>
 
-    <tr><th>입찰가격</th> <input type="text" name="bidPrice" value="0"></tr>
+        <tr><th>입찰가격</th> <input type="text" name="bidPrice" value="0"></tr>
 
-  </table>
-  </div>
+    </table>
+    </div>
 
-  <div>
-    <button>변경</button>
-    <button type='reset'>초기화</button>
-    <a data-th-href="@{/article/list(status=${article.status},currentPage=${currentPage})}">목록</a>
-  </div>
+    <div>
+        <button>변경</button>
+        <button type='reset'>초기화</button>
+        <a data-th-href="@{/article/list(status=${article.status},currentPage=${currentPage})}">목록</a>
+    </div>
 
 </form>
 
